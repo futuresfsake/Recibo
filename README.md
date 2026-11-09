@@ -19,6 +19,10 @@ Next.js + TypeScript + Tailwind + shadcn/ui · FastAPI + Pydantic v2 · Ollama �
 
 ## Docs
 
+- [Rules for contributors and agents](AGENTS.md)
+- [Requirements (FR/NFR IDs)](docs/REQUIREMENTS.md)
+- [Agentic workflow, gates, DoR/DoD](docs/AGENTIC_WORKFLOW.md)
+- [Open questions register](docs/OPEN_QUESTIONS.md)
 - [Plan and milestones](docs/PLAN.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Evaluation plan](docs/EVALS.md)

@@ -4,7 +4,20 @@
 **Constraint:** everything free, no paid keys.
 **Rule:** build milestones in order; at the end of each, run tests, summarize, list what's next.
 
+## Working agreement
+
+Work follows [AGENTIC_WORKFLOW.md](AGENTIC_WORKFLOW.md): DoR → tests first (titles carry FR/NFR IDs from [REQUIREMENTS.md](REQUIREMENTS.md)) → DoD with fresh-context review → small commit → audit log entry. Gaps go to [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md), never guessed. Target maturity: Level 3.
+
 ## Milestones
+
+### M0 — Agentic scaffolding (before M1)
+- [ ] `AGENTS.md`, `REQUIREMENTS.md`, workflow and register docs (done in this commit batch)
+- [ ] `.githooks/` pre-commit (secrets scan, lint) and pre-push (tests, trace); `git config core.hooksPath .githooks`
+- [ ] gitleaks + semgrep config (free, local)
+- [ ] `scripts/trace.py`: requirement coverage from JUnit XML (covered / uncovered / orphaned)
+- [ ] `docs/audit/log.jsonl` append-only (`.gitattributes` `merge=union`, hook blocks edits)
+- [ ] CI (GitHub Actions free tier): tests, trace, lint
+- **Done when:** a commit containing a fake key is blocked, and `trace.py` flags an uncovered FR.
 
 ### M1 — Setup
 - [ ] Repo structure, `.gitignore`, `.env.example`
