@@ -83,7 +83,11 @@ resibo/
 ## 5. Environment variables (`backend/.env.example`)
 
 ```
-DATABASE_URL=postgresql+psycopg://resibo:@localhost:5432/resibo
+POSTGRES_USER=resibo
+POSTGRES_PASSWORD=            # set your own in .env
+POSTGRES_DB=resibo
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
 LLM_PROVIDER=ollama                 # ollama | openai_compat
 OLLAMA_BASE_URL=http://localhost:11434
 LLM_MODEL=qwen2.5:7b                # use llama3.2:3b if the laptop has 8GB RAM
