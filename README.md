@@ -3,19 +3,24 @@
 **Evidence-grounded resume–job matching for the Philippine job market.**
 *"May resibo ka?"* — every match comes with proof.
 
-Resibo compares a resume with a job post and rates the fit. Every claim the AI makes must cite an exact quote from the resume. The backend checks each quote programmatically (fuzzy match). A claim with no verified quote is rejected and downgraded to a gap.
+Three free tools for Filipino job seekers, one rule: **every claim comes with proof, and code verifies the proof.**
 
-> Status: planning. See [docs/PLAN.md](docs/PLAN.md).
+1. **Post Check** — red-flag signals in a job post (fees, vague employer, chat-only contact…), each with the exact quote. Advisory, never a verdict. Works without an LLM.
+2. **Fit Check** — resume vs. job post. Every rating cites a resume quote that code fuzzy-matches against the resume. No verified quote means the claim is rejected and downgraded to a gap.
+3. **Next Steps** — reframing tips using only verified experience, plus an honest list of gaps to earn.
+
+> Status: planning and foundations. See [docs/PLAN.md](docs/PLAN.md).
 
 ## Why
 
-- Resume checkers often hallucinate skills. Resibo makes that measurable and blocks it.
-- Understands PH context: TESDA NC, Civil Service, PRC licenses, Latin honors, OJT, Taglish job posts.
-- 100% free to run: Ollama (local LLM), Postgres + pgvector (Docker), free-tier deploy.
+- Scam posts, unclear requirements and silent rejections are everyday problems for Filipino applicants ([docs/PRODUCT.md](docs/PRODUCT.md)).
+- AI resume tools invent experience. Resibo measures that and blocks it.
+- Understands PH context: TESDA NC, Civil Service, PRC licenses, Latin honors, OJT, Taglish posts.
+- ₱0 to run, no card. Private by default: nothing stored server-side ([docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/COST_FREE_STACK.md](docs/COST_FREE_STACK.md)).
 
 ## Stack
 
-Next.js + TypeScript + Tailwind + shadcn/ui · FastAPI + Pydantic v2 · Ollama · Postgres 16 + pgvector · rapidfuzz · pytest
+Next.js PWA (static) · FastAPI + Pydantic v2 · Ollama locally, free hosted LLM chain for the demo · rapidfuzz · pytest. Postgres + pgvector only for optional dev/eval work.
 
 ## Docs
 
