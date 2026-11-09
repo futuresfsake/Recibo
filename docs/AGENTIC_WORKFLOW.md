@@ -51,7 +51,7 @@ For `verify_citations`, `score`, prompt-injection handling, and anything touchin
 
 ## 6. Traceability
 
-- Tests: `test_FR-07_<what>` (literal ID in the title).
+- Tests: `test_FR07_<what>` (literal ID in the title).
 - `scripts/trace.py` reads `docs/REQUIREMENTS.md` and pytest JUnit XML, then reports covered / uncovered / orphaned. It runs in CI and the pre-push hook as a gate.
 
 ## 7. Audit log

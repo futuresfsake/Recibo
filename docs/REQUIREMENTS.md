@@ -1,6 +1,6 @@
 # Requirements
 
-Stable IDs. Every test title must contain the ID it proves (e.g. `test_FR-07_exact_quote_verified`). `scripts/trace.py` (M0) reports covered / uncovered / orphaned.
+Stable IDs. Every test title must contain the ID it proves (e.g. `test_FR07_exact_quote_verified`; Python names cannot hold a hyphen, so `FR-07` is written `FR07`). `scripts/trace.py` (M0) reports covered / uncovered / orphaned.
 
 Changing this file is a controlled action: only the owner, with the change logged in `docs/DECISIONS.md`.
 

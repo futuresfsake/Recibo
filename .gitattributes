@@ -1,0 +1,5 @@
+* text=auto
+# audit log: concurrent appends are unioned, never overwritten
+docs/audit/log.jsonl merge=union
+*.sh text eol=lf
+.githooks/* text eol=lf
