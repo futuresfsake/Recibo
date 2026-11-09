@@ -1,0 +1,8 @@
+title = "resibo gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Example env file holds empty placeholders only"
+paths = ['''backend/\.env\.example''']
