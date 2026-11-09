@@ -11,10 +11,10 @@ Everything below is a **hypothesis until validated** (see "Validation"). Evidenc
 
 | # | Pain | Evidence level | Resibo response |
 |---|---|---|---|
-| P1 | Scam and illegal-recruitment posts: fees to apply, "hired agad", no interview, contact only via personal chat | Widely reported by PH government advisories and media; verify specifics | **Post Check**: red-flag signals, each with the exact quote from the post |
+| P1 | Scam and illegal-recruitment posts: fees to apply, "hired agad", no interview, contact only via personal chat | **Supported** by 2026 DMW advisories, DOLE warnings and enforcement news ([evidence](research/EVIDENCE.md)) | **Post Check**: red-flag signals, each with the exact quote from the post |
 | P2 | "Do I even qualify?" People self-reject, or mass-apply blindly | Common job-search behavior; validate locally | **Fit Check** with proof |
 | P3 | No feedback; rejections and ghosting | Common; validate | Gap report before applying, so the rejection reason is visible in advance |
-| P4 | Entry-level posts ask for experience; OJT, projects, TESDA NC, CSC eligibility, honors are undervalued | Likely for fresh grads; validate | Treat those as first-class evidence |
+| P4 | Entry-level posts ask for experience; OJT, projects, TESDA NC, CSC eligibility, honors are undervalued | **Partly supported**: PSA June 2026 data and press say new graduates cannot be absorbed and employers ask for experience students lack; validate locally ([evidence](research/EVIDENCE.md)) | Treat those as first-class evidence |
 | P5 | One generic resume; PH resume habits (photo, age, civil status, religion) vs. what employers need; privacy exposure | Likely; validate with HR/recruiters | **Resume hygiene** notes (advice, context-dependent) |
 | P6 | Taglish, vague, jargon-heavy posts | Likely | Plain-language restatement of requirements (English or Taglish) |
 | P7 | AI resume tools invent experience, so candidates get caught in interviews | Known LLM failure mode | The resibo guardrail: no verified quote, no claim |
