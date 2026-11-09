@@ -1,7 +1,10 @@
 #!/bin/sh
 # Resibo pre-push: tests (if present) and requirement traceability.
-if [ -d backend/tests ] && ls backend/tests/test_*.py >/dev/null 2>&1; then
-  (cd backend && python -m pytest -q --junitxml=../.pytest-junit.xml) || { echo "BLOCKED: tests failed."; exit 1; }
+PY=python
+[ -x backend/.venv/Scripts/python.exe ] && PY="$(pwd)/backend/.venv/Scripts/python.exe"
+[ -x backend/.venv/bin/python ] && PY="$(pwd)/backend/.venv/bin/python"
+if ls backend/tests/test_*.py >/dev/null 2>&1; then
+  (cd backend && "$PY" -m pytest -q) || { echo "BLOCKED: tests failed."; exit 1; }
 fi
-python scripts/trace.py || { echo "BLOCKED: traceability check failed."; exit 1; }
+"$PY" scripts/trace.py || { echo "BLOCKED: traceability check failed."; exit 1; }
 exit 0
