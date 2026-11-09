@@ -18,6 +18,8 @@ Status is mutable; resolved items move to Closed and are not edited again. "Bloc
 | Q-12 | Which official verification channels to link from Post Check (agency names and URLs must be verified current) | fact needed | M3 | open |
 | Q-13 | Backend host for the demo (cold starts vs. memory limits); verify at M8 | fact needed | M8 | open |
 | Q-14 | Timeline: confirm the proposed windows against Queueless and interview dates | owner decides | none | open |
+| Q-15 | Capacity is about 20–30 analyses/day per provider (unmeasured). Add a bring-your-own-free-key mode (key held in the browser, never logged)? | owner decides after measuring tokens in M2 | M8 | open |
+| Q-16 | Fresh-grad statistics conflict between sources (38.2% vs 35.6%); cite only the PSA release. Who confirms the final numbers for the README? | owner | M9 | open |
 
 ## Closed
 
