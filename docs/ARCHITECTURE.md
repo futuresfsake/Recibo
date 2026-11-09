@@ -1,46 +1,96 @@
-# Architecture
+# Architecture (v2, cost-free, privacy-first)
+
+## Principles
+
+1. **Deterministic first, LLM last.** Code does everything it can (parsing, PH taxonomy, red-flag rules, quote verification, scoring). The LLM is used only where language understanding is needed.
+2. **Stateless and private by default.** No resume or job text stored or logged server-side. History lives in the user's browser.
+3. **Every external dependency is swappable** behind an interface (LLM, embeddings).
+4. **Degrade, don't fail.** If the LLM is down or out of quota, the deterministic tools still work.
+5. **₱0 to run, no credit card anywhere.**
+
+## System
 
 ```
-Next.js (frontend) ──HTTP──▶ FastAPI (backend) ──▶ Ollama (LLM + embeddings)
-                                   │
-                                   └──▶ Postgres 16 + pgvector (Docker)
+ Phone / browser (Next.js PWA, static export)
+   │  history in IndexedDB (browser only)
+   ▼
+ FastAPI (stateless)
+   ├─ Rule engine ........ Post Check red-flag rules, PH taxonomy (YAML)   [no LLM]
+   ├─ Parser ............. PDF/DOCX → text + sections                      [no LLM]
+   ├─ Retriever .......... in-memory: BM25 + small embeddings per request  [no DB]
+   ├─ Verifier ........... rapidfuzz quote check, downgrade, flag           [no LLM]
+   ├─ Scorer ............. weighted 0–100                                  [no LLM]
+   └─ LLM router ......... provider chain, cache, schema validation, retry
+         ├─ Ollama (local dev)
+         └─ free hosted OpenAI-compatible providers (ordered, with fallback)
+ Optional Postgres + pgvector: dev/eval only, not on the production path.
 ```
 
-The frontend never talks to Ollama or the DB directly.
+## Pipelines
 
-## Pipeline
+**Post Check** (`POST /post-check`)
+1. `rules` (D): regex/keyword/structure checks over the post → signals with exact quote spans (fee requests, "hired agad", personal chat-only contact, missing employer identity, unrealistic pay/no-interview patterns, etc.).
+2. `explain` (L, optional): plain-language explanation in English or Taglish. Output is validated; each explained signal must reference a rule-produced signal and a verified quote. The LLM cannot add new signals.
 
-1. **parse_resume** — PDF/DOCX to clean text and sections.
-2. **extract_requirements** — LLM returns `[{id, text, category, importance}]`.
-3. **match** — embed requirement and resume chunks, retrieve top-k from pgvector, LLM rates `strong|partial|gap` with exact quotes.
-4. **verify_citations** — rapidfuzz `partial_ratio` of each quote against the resume. Below threshold: drop the quote. No verified quotes left: rating becomes `gap`, `hallucination_caught=true`.
-5. **score** — weighted 0–100 in Python (required > preferred). The LLM never scores.
-6. **suggestions** — tips that only reframe verified experience.
+**Fit Check** (`POST /analyze`)
+1. `parse_resume` (D)
+2. `normalize` (D): PH taxonomy maps TESDA NC, CSC eligibility, PRC licenses, Latin honors, OJT, role synonyms.
+3. `extract_requirements` (L): job text → requirements JSON.
+4. `retrieve` (D): per requirement, top-k resume chunks (BM25 + in-memory embeddings).
+5. `judge` (L): **one batched call** for all requirements → rating, explanation, exact quotes.
+6. `verify_citations` (D): fuzzy-match each quote; below threshold, drop it; none left → `gap` + `hallucination_caught`.
+7. `score` (D): Python, required > preferred.
+8. `suggest` (L) + `verify` (D): reframing tips must cite verified quotes; the gap-actions list is generated separately and labeled "not on your resume".
 
-## Key design rules
+(D) = deterministic, (L) = LLM call. Budget: **at most 3 LLM calls per analysis** (extract, judge, suggest). Post Check: 0–1.
 
-- Structured output (`format=` JSON schema), validated by Pydantic, one retry.
-- `temperature=0` for extraction and matching.
-- Prompts live in `backend/app/prompts/`.
-- Every LLM call logged: prompt name, model, latency, success.
-- `LLMClient` interface so `ollama` and `openai_compat` are swappable (needed for free hosted deploy).
-- No LangChain; direct Ollama calls.
+## LLM router
+
+- Interface `LLMClient` (`generate_structured`, `embed`); implementations: `ollama_client`, `openai_compat_client`.
+- Ordered provider list from config; per-provider timeout and circuit breaker; on quota/429/timeout, try the next.
+- Structured output with JSON schema, Pydantic validation, one retry, `temperature=0`.
+- Response cache keyed by SHA-256 of (prompt version, model, inputs); in memory, never persisted. Identical re-submits cost zero calls.
+- Prompts are versioned files in `app/prompts/`; the version is part of the cache key and the eval record.
+- If all providers fail: return deterministic-only results with an explicit "AI explanation unavailable" state.
+
+## Abuse and cost control (the public demo is a free-quota target)
+
+- Payload caps: resume and post text length limits; file size limit.
+- Per-IP rate limit (in memory) and a free bot check (Cloudflare Turnstile) on the demo.
+- Kill switch via env var to disable hosted LLM use if quota is nearly exhausted.
+
+## Privacy
+
+- No resume/job text in logs. Logs hold metadata only: prompt name/version, model, latency, success, token counts.
+- No server-side persistence in v1. If it is ever added: explicit consent, retention limit, delete path, notice aligned with the Data Privacy Act.
+- Tests and evals use synthetic data only.
 
 ## API
 
 | Endpoint | Purpose |
 |---|---|
-| `GET /health` | DB + Ollama reachable |
-| `POST /analyze` | multipart `resume_file` + `job_text` |
-| `GET /history` | past analyses (no auth) |
-| `GET /history/{id}` | one analysis |
+| `GET /health` | DB (if configured), LLM providers reachable |
+| `POST /post-check` | job post text → signals with quotes |
+| `POST /analyze` | resume file + job text → full analysis |
 
-Full response shape: see `docs/PROJECT_CONTEXT.md` section 8.
+No `/history` on the server in v1 (browser-side). Response shapes: `docs/PROJECT_CONTEXT.md` §8, extended with `signals[]` for post checks.
 
-## Config (`backend/.env.example`)
+## Failure modes
 
-`DATABASE_URL`, `LLM_PROVIDER`, `OLLAMA_BASE_URL`, `LLM_MODEL`, `EMBED_MODEL`, `OPENAI_COMPAT_BASE_URL`, `OPENAI_COMPAT_API_KEY`, `CITATION_MATCH_THRESHOLD`.
+| Failure | Behavior |
+|---|---|
+| Ollama/hosted LLM down | Fall through provider chain; else deterministic-only |
+| Model emits bad JSON | Retry once; else mark that step failed, show partial result |
+| Unreadable/scanned PDF | Clear error; suggest DOCX or text paste |
+| Empty or oversized input | 400 with a plain message |
+| Quote fails verification | Dropped; rating downgraded; flag shown (feature, not bug) |
 
-## Error handling to cover
+## Key trade-offs
 
-Ollama not running, model not pulled, unreadable PDF, empty job post.
+| Choice | Why | Cost |
+|---|---|---|
+| No pgvector in production path | A resume has tens of chunks; in-memory retrieval is simpler, faster and free | Lose pgvector practice in prod; keep it as an optional eval/learning spike |
+| Stateless backend | Privacy, ₱0 hosting, no migrations | No server-side history or cross-device sync |
+| Batched judge call | Fewer free-tier calls, lower latency | Longer prompt; evals must confirm accuracy vs. per-requirement calls |
+| Rules before LLM for scams | Deterministic, testable, works offline | Needs a good corpus and maintenance |
+| Static frontend | Free CDN hosting, fast on mobile | No server rendering needs; fine here |
