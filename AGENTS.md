@@ -18,6 +18,10 @@ Project background: `docs/PROJECT_CONTEXT.md`. Workflow and gates: `docs/AGENTIC
 10. Never edit `docs/REQUIREMENTS.md` to make an inconvenient requirement go away. Raise it in `docs/OPEN_QUESTIONS.md` instead.
 11. Never write a test whose title lacks a requirement ID (`FR-xx` / `NFR-xx`).
 12. Never mark work done using criteria you invented; use the DoD in `docs/AGENTIC_WORKFLOW.md`.
+13. Never persist or log resume or job-post text server-side (metadata only). History lives in the browser.
+14. Never present Post Check output as a verdict. It reports signals with quotes; the LLM may explain signals but never add new ones.
+15. Never let a hosted-LLM failure break the deterministic tools; they must work with the LLM off.
+16. Never exceed 3 LLM calls per Fit Check or 1 per Post Check.
 
 ## Never infer
 
