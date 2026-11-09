@@ -1,87 +1,114 @@
-# Resibo — Plan
+# Resibo — Plan (v2)
 
-**Goal:** a portfolio project for 2027 AI engineering internship applications. Evaluation results matter as much as the app.
-**Constraint:** everything free, no paid keys.
-**Rule:** build milestones in order; at the end of each, run tests, summarize, list what's next.
+**Goal:** a free tool that addresses real Filipino job-search pain points (see [PRODUCT.md](PRODUCT.md)), and a portfolio project for 2027 AI engineering internship applications. Evaluation results matter as much as the app.
+**Constraints:** ₱0, no card ([COST_FREE_STACK.md](COST_FREE_STACK.md)); privacy-first and stateless ([ARCHITECTURE.md](ARCHITECTURE.md)).
+**Working agreement:** [AGENTIC_WORKFLOW.md](AGENTIC_WORKFLOW.md) — DoR → tests first (IDs from [REQUIREMENTS.md](REQUIREMENTS.md)) → DoD with fresh-context review → one-file commits → audit log. Gaps go to [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md), never guessed.
 
-## Working agreement
+## What changed from v1
 
-Work follows [AGENTIC_WORKFLOW.md](AGENTIC_WORKFLOW.md): DoR → tests first (titles carry FR/NFR IDs from [REQUIREMENTS.md](REQUIREMENTS.md)) → DoD with fresh-context review → small commit → audit log entry. Gaps go to [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md), never guessed. Target maturity: Level 3.
+| v1 | v2 | Why |
+|---|---|---|
+| Resume–job matcher only | Three tools: Post Check, Fit Check, Next Steps | Scam posts (P1) are likely a bigger, more urgent pain than fit scoring, and Post Check works with no LLM |
+| Build, then evaluate | Eval-first: golden cases written with each slice | Evals are the differentiator; late evals get skipped |
+| Postgres + pgvector in prod | Stateless; in-memory retrieval; DB for dev/eval only | Privacy, ₱0 hosting, less to run |
+| Per-requirement LLM calls | One batched judge call; ≤ 3 LLM calls per analysis | Free quotas |
+| Build first, ask users later | Validate pain points before building past the skeleton | Avoid building what nobody needs |
+| Server-side history | Browser-side history | Privacy |
+
+## Status
+
+| Item | State |
+|---|---|
+| Docs, rules, requirements, workflow | done |
+| Hooks (secrets, audit log, tests, trace), CI file, semgrep config | done (ggshield pending login) |
+| FastAPI skeleton + `/health` + tests | done |
+| Everything below | not started |
+
+## Timeline (proposed, confirm)
+
+The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resibo gets light time until then.
+
+| Window | Work |
+|---|---|
+| now – 11-14 | Docs only; no feature work |
+| 11-16 – 11-30 | M1 Discovery + M2 Foundation (starts during interview prep, keep it small) |
+| 12-08 – 12-31 | M3 Post Check, M4 Fit Check |
+| Jan 2027 | M5 PWA, M6 evals, M7 improve |
+| Feb 2027 | M8 deploy + pilot, M9 write-up, ready for applications |
 
 ## Milestones
 
-### M0 — Agentic scaffolding (before M1)
-- [ ] `AGENTS.md`, `REQUIREMENTS.md`, workflow and register docs (done in this commit batch)
-- [ ] `.githooks/` pre-commit (secrets scan, lint) and pre-push (tests, trace); `git config core.hooksPath .githooks`
-- [ ] gitleaks + semgrep config (free, local)
-- [ ] `scripts/trace.py`: requirement coverage from JUnit XML (covered / uncovered / orphaned)
-- [ ] `docs/audit/log.jsonl` append-only (`.gitattributes` `merge=union`, hook blocks edits)
-- [ ] CI (GitHub Actions free tier): tests, trace, lint
-- **Done when:** a commit containing a fake key is blocked, and `trace.py` flags an uncovered FR.
+### M0 — Guards (mostly done)
+- [x] Hooks, audit log, trace script, CI, semgrep, gitleaks config
+- [ ] `ggshield` login, add to pre-commit and CI
+- [ ] Semgrep run in CI
+- **Done when:** a fake key commit is blocked locally and in CI.
 
-### M1 — Setup
-- [ ] Repo structure, `.gitignore`, `.env.example`
-- [ ] `docker-compose.yml` (`pgvector/pgvector:pg16`)
-- [ ] FastAPI skeleton + `config.py` (pydantic-settings)
-- [ ] `GET /health` checks DB + Ollama
-- [ ] Ollama connection test (pull `qwen2.5:7b` or `llama3.2:3b`, `nomic-embed-text`)
-- **Done when:** `/health` returns OK for DB and Ollama on Windows.
+### M1 — Discovery and data
+- [ ] 8–10 job-seeker interviews + 2–3 recruiter/HR conversations; notes in `docs/research/` (anonymized)
+- [ ] 30+ hand-collected anonymized job posts: legit, borderline, scam-like (`evals/data/posts/`)
+- [ ] 5 synthetic resumes (IT, BPO, VA, nursing, data)
+- [ ] PH taxonomy YAML: TESDA NC levels, CSC eligibility, PRC licenses, honors, OJT, role synonyms, Taglish phrases
+- [ ] Re-rank pain points; update PRODUCT.md and, if needed, this plan
+- **Done when:** pain-point ranking written and the corpus exists.
 
-### M2 — Parsing + requirement extraction
-- [ ] `parse_resume` (pdfplumber, python-docx) with sections
-- [ ] `LLMClient` interface + `ollama_client` with structured output, retry once, call logging
-- [ ] `extract_requirements` prompt (PH + Taglish examples)
-- [ ] Tests on 3 sample resumes / job posts
-- **Done when:** a job post becomes valid requirement JSON; bad PDF and empty job text give clear errors.
+### M2 — Foundation
+- [x] FastAPI skeleton, `/health`
+- [ ] `LLMClient` interface, Ollama client, OpenAI-compatible client
+- [ ] LLM router: provider chain, timeout, circuit breaker, cache, schema validation, retry once, metadata-only call log (FR-14, FR-21, FR-22)
+- [ ] Pydantic schemas for all LLM outputs
+- **Done when:** a structured call succeeds locally and falls back to a second provider when the first is forced to fail (test).
 
-### M3 — Matching + embeddings
-- [ ] Resume chunking, embeddings stored in pgvector
-- [ ] Top-k retrieval per requirement
-- [ ] LLM judgment: rating, explanation, exact evidence quotes
-- **Done when:** each requirement has a rating and candidate quotes.
+### M3 — Slice A: Post Check
+- [ ] Rule engine with signals + exact quote spans (FR-17, FR-18)
+- [ ] Optional LLM plain-language explanation, constrained to rule-produced signals (FR-19)
+- [ ] `POST /post-check`; eval on the post corpus: recall on scam-like posts, false-positive rate on legit posts (NFR-15)
+- **Done when:** works with the LLM switched off, and eval numbers are recorded.
 
-### M4 — Citation verification + scoring
-- [ ] `verify_citations` with rapidfuzz `partial_ratio`, threshold from env
-- [ ] Downgrade to gap + `hallucination_caught` when no verified quote
-- [ ] `score` weighted in Python (required > preferred)
-- [ ] Unit tests: exact, near-match, fabricated quotes; score edge cases
-- **Done when:** the guardrail and scoring are fully tested.
+### M4 — Slice B: Fit Check
+- [ ] Parse resume, sections, PH normalization (FR-01, FR-02, FR-04)
+- [ ] Extract requirements (FR-03), in-memory retrieval (FR-05), batched judge (FR-06)
+- [ ] Verify citations, downgrade, flag (FR-07, FR-08): strict RED→GREEN, gated review
+- [ ] Score (FR-09), suggestions with verification, separate gap-actions list (FR-10)
+- [ ] `POST /analyze` (FR-11); injection test cases (NFR-09)
+- **Done when:** end-to-end analysis on 5 synthetic resumes, with `verify_citations` and `score` fully unit tested.
 
-### M5 — Frontend MVP
-- [ ] Upload + paste + Analyze + loading state
-- [ ] Score, grouped requirements, highlighted resibo, verified / rejected badges
-- [ ] History page, mobile-friendly
-- **Done when:** end-to-end flow works against the API.
+### M5 — PWA frontend
+- [ ] Static Next.js app: Post Check page, Fit Check page, results with highlighted resibo and rejected-claim badge (FR-15)
+- [ ] Browser-side history (FR-23), mobile-first at 360 px (NFR-13)
+- **Done when:** both tools usable on a phone-width viewport against the local API.
 
-### M6 — Eval dataset + runner
-- [ ] 30–50 labeled pairs (IT, BPO, VA, nursing, data; strong / weak / tricky)
-- [ ] `metrics.py`, `run_evals.py --model ...`, two-model comparison
-- [ ] First results recorded in `evals/results/`
-- **Done when:** one command prints the full metrics table.
+### M6 — Eval suite (grows from M3 onward)
+- [ ] 30–50 labeled resume/post pairs (strong, weak, tricky; PH roles; Taglish)
+- [ ] `metrics.py`, `run_evals.py --model`, two-model comparison
+- [ ] Hallucination (raw/final), rating accuracy, bias swaps, consistency, latency, injection, Post Check precision/recall
+- **Done when:** one command prints the full table and writes a timestamped result file.
 
 ### M7 — Improve
-- [ ] Tune prompts, threshold, chunking from eval findings
-- [ ] Re-run, record before/after
-- [ ] Write the "What didn't work" section
+- [ ] Tune prompts, threshold, chunking, batched vs. per-requirement judging; record before/after
+- [ ] Draft the "What didn't work" section
+- **Done when:** at least one measured improvement per weak metric.
 
-### M8 — Deploy (free) + README + demo video
-- [ ] Vercel + Render + Neon/Supabase + free OpenAI-compatible LLM (verify limits)
-- [ ] Fallback: demo video + local setup instructions
-- [ ] README results table
+### M8 — Free deploy and pilot
+- [ ] Verify current free limits, record date in COST_FREE_STACK.md
+- [ ] Deploy frontend + backend; provider chain; Turnstile; rate limits; kill switch
+- [ ] Pilot with 5–10 real users; short survey; fix top issues
+- **Done when:** public URL works on a phone with no card on file anywhere.
+
+### M9 — Write-up
+- [ ] README results table + "What didn't work", architecture diagram, demo video, short case study
 
 ## Risks
 
 | Risk | Mitigation |
 |---|---|
-| Laptop too slow for 7B model | Use `llama3.2:3b`; compare both in evals |
-| Small models emit invalid JSON | Structured output + Pydantic validation + one retry |
-| Free hosted LLM limits change | Verify before M8; keep video fallback |
-| Eval labeling takes long | Start with 10 cases at M4, grow to 30–50 by M6 |
+| Interviews show scams matter less than fit | Re-rank at M1; both slices exist, only order changes |
+| Free LLM tiers change or vanish | Provider chain, deterministic-only mode, demo video fallback |
+| Laptop too slow for 7B | `llama3.2:3b`; compare in evals |
+| Scam rules produce false positives | Signals not verdicts, quotes shown, FP rate reported |
+| Time collision with Queueless and interviews | Timeline above; docs-only until Nov 14 |
+| Eval labeling takes long | Grow the set with each slice instead of all at once |
 
-## Timeline
+## Out of scope (v1)
 
-Internship applications open in 2027. Target: M1–M5 working MVP first, then evals (M6–M7), deploy last. Set dates once M1 is done and pace is known.
-
-## Out of scope (MVP)
-
-Auth, fine-tuning, scraping job sites, auto-writing resumes, auto-applying, non-English/Taglish posts.
+Accounts, auto-apply, scraping, resume auto-writing, salary data, fine-tuning, languages beyond English/Taglish.
