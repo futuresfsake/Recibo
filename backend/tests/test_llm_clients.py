@@ -246,10 +246,20 @@ def test_NFR04_openai_compat_bad_json_twice_raises_output_error() -> None:
     assert len(rec.requests) == 2
 
 
-def test_NFR04_openai_compat_unexpected_response_shape_raises_output_error() -> None:
-    client, _ = openai(lambda r: httpx.Response(200, json={"choices": []}))
+def test_NFR04_openai_compat_unexpected_response_shape_is_retried_then_raises() -> None:
+    client, rec = openai(lambda r: httpx.Response(200, json={"choices": []}))
     with pytest.raises(LLMOutputError):
         client.generate_structured(SECRET_PROMPT, Verdict)
+    assert len(rec.requests) == 2
+
+
+def test_NFR04_ollama_unexpected_response_shape_retry_can_recover() -> None:
+    client, rec = ollama(
+        sequence(httpx.Response(200, json={"message": None}), ollama_reply(GOOD))
+    )
+    result = client.generate_structured(SECRET_PROMPT, Verdict)
+    assert result.attempts == 2
+    assert len(rec.requests) == 2
 
 
 # --- privacy ---------------------------------------------------------------------------
@@ -312,5 +322,18 @@ def test_FR05_embed_empty_input_makes_no_call() -> None:
 
 def test_NFR04_embed_wrong_vector_count_raises_output_error() -> None:
     client, _ = ollama(lambda r: httpx.Response(200, json={"embeddings": [[0.1, 0.2]]}))
+    with pytest.raises(LLMOutputError):
+        client.embed(["alpha", "beta"])
+
+
+@pytest.mark.parametrize("bad", [
+    [[0.1, 0.2], "oops"],            # not a vector
+    [[0.1, 0.2], [0.3]],             # inconsistent dimensions
+    [[0.1, 0.2], []],                # empty vector
+    [[0.1, 0.2], [0.3, "x"]],        # non-numeric value
+    [[0.1, 0.2], [0.3, True]],       # bool is not a number here
+])
+def test_NFR04_embed_malformed_vectors_raise_output_error(bad: list) -> None:
+    client, _ = ollama(lambda r: httpx.Response(200, json={"embeddings": bad}))
     with pytest.raises(LLMOutputError):
         client.embed(["alpha", "beta"])
