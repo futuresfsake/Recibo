@@ -20,6 +20,9 @@ Status is mutable; resolved items move to Closed and are not edited again. "Bloc
 | Q-14 | Timeline: confirm the proposed windows against Queueless and interview dates | owner decides | none | open |
 | Q-15 | Capacity is about 20–30 analyses/day per provider (unmeasured). Add a bring-your-own-free-key mode (key held in the browser, never logged)? | owner decides after measuring tokens in M2 | M8 | open |
 | Q-16 | Fresh-grad statistics conflict between sources (38.2% vs 35.6%); cite only the PSA release. Who confirms the final numbers for the README? | owner | M9 | open |
+| Q-17 | Which response format does each hosted provider in the chain accept: `json_schema` or only `json_object`? The client supports both (default `json_schema`); the per-provider setting is unverified | fact needed | M2 router config | open |
+| Q-18 | The one retry on invalid LLM output re-sends the same request. Should it instead tell the model what failed validation? That needs a repair prompt file in `app/prompts/` and costs more tokens | owner decides | none (current behaviour works) | open |
+| Q-19 | Q-01 is marked as blocking all of M2, but the client code does not depend on the default model. Narrow Q-01 to "blocks choosing the default in config"? | owner decides | none | open |
 
 ## Closed
 
