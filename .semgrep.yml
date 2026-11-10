@@ -28,5 +28,5 @@ rules:
     message: Project rule - no LangChain; call the LLM client directly.
     pattern-either:
       - pattern: import langchain
-      - pattern: from langchain import ...
-      - pattern: from langchain_core import ...
+      - pattern: from langchain import $X
+      - pattern: from langchain_core import $X
