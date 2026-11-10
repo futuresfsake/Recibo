@@ -19,6 +19,7 @@ jobs:
           cache-dependency-path: backend/requirements.txt
       - run: pip install -r requirements.txt
       - run: ruff check .
+      - run: mypy app
       - run: pytest -q --junitxml=../.pytest-junit.xml
 
   trace:
