@@ -109,21 +109,41 @@ def as_int(value: object) -> int | None:
     return value if isinstance(value, int) and not isinstance(value, bool) else None
 
 
+def validate_vectors(raw: object, expected: int, provider: str) -> list[list[float]]:
+    """Check embeddings: `expected` equal-length, non-empty lists of real numbers."""
+    if (
+        not isinstance(raw, list)
+        or len(raw) != expected
+        or not all(
+            isinstance(v, list)
+            and v
+            and all(isinstance(x, (int, float)) and not isinstance(x, bool) for x in v)
+            for v in raw
+        )
+        or len({len(v) for v in raw}) > 1
+    ):
+        raise LLMOutputError(f"{provider} returned malformed embeddings")
+    return raw
+
+
 def run_structured(
     call: Callable[[], RawReply], schema: type[T], *, provider: str, model: str
 ) -> LLMResult[T]:
     """Call, validate against `schema`, retry once on invalid output.
 
-    Only invalid *output* is retried. Transport and HTTP failures propagate at once so the
-    router can move to the next provider instead of waiting on a dead one.
+    Only invalid *output* (including a malformed response envelope) is retried. Transport
+    and HTTP failures propagate at once so the router can move to the next provider
+    instead of waiting on a dead one.
     """
     started = time.perf_counter()
     for attempt in range(1, MAX_ATTEMPTS + 1):
-        reply = call()
         try:
+            reply = call()
             data = schema.model_validate_json(reply.content)
-        except ValidationError:
-            continue  # the error text would quote the model's output, so it is dropped
+        except (LLMOutputError, ValidationError):
+            # Malformed response shape, bad JSON or schema mismatch all count as one failed
+            # attempt. The exception text may quote the model's output, so it is dropped.
+            continue
         return LLMResult(
             data=data,
             provider=provider,
