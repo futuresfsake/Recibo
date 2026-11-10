@@ -22,6 +22,7 @@
 | Docs, rules, requirements, workflow | done |
 | Hooks (secrets, audit log, tests, trace), CI file, semgrep config | done (ggshield pending login) |
 | FastAPI skeleton + `/health` + tests | done |
+| `LLMClient` + Ollama and OpenAI-compatible clients (mocked HTTP tests) | done, awaiting fresh-context review; not yet run against a real model |
 | Everything below | not started |
 
 ## Timeline (proposed, confirm)
@@ -54,7 +55,7 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 
 ### M2 — Foundation
 - [x] FastAPI skeleton, `/health`
-- [ ] `LLMClient` interface, Ollama client, OpenAI-compatible client
+- [x] `LLMClient` interface, Ollama client, OpenAI-compatible client (`backend/app/llm/`; not independently reviewed yet)
 - [ ] LLM router: provider chain, timeout, circuit breaker, cache, schema validation, retry once, metadata-only call log (FR-14, FR-21, FR-22)
 - [ ] Pydantic schemas for all LLM outputs
 - **Done when:** a structured call succeeds locally and falls back to a second provider when the first is forced to fail (test).
