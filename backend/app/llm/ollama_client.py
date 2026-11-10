@@ -17,6 +17,7 @@ from app.llm.base import (
     parse_json,
     run_structured,
     send,
+    validate_vectors,
 )
 
 DEFAULT_TIMEOUT_SECONDS = 120.0  # a local 7B model on a laptop CPU is slow
@@ -74,10 +75,7 @@ class OllamaClient:
         body = self._post(
             "/api/embed", {"model": self.embed_model, "input": texts}, self.embed_model
         )
-        vectors = body.get("embeddings")
-        if not isinstance(vectors, list) or len(vectors) != len(texts):
-            raise LLMOutputError("ollama returned an unexpected number of embeddings")
-        return vectors
+        return validate_vectors(body.get("embeddings"), len(texts), self.provider)
 
     def _post(self, path: str, payload: dict[str, Any], model: str) -> dict[str, Any]:
         response = send(self._http, self.provider, f"{self._base_url}{path}", payload)
