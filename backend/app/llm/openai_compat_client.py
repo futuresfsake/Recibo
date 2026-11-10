@@ -23,6 +23,7 @@ from app.llm.base import (
     parse_json,
     run_structured,
     send,
+    validate_vectors,
 )
 
 DEFAULT_TIMEOUT_SECONDS = 30.0
@@ -96,15 +97,14 @@ class OpenAICompatClient:
             return []
         body = self._post("/embeddings", {"model": self.embed_model, "input": texts})
         data = body.get("data")
-        if not isinstance(data, list) or len(data) != len(texts):
-            raise LLMOutputError(f"{self.provider} returned an unexpected number of embeddings")
         try:
+            if not isinstance(data, list):
+                raise TypeError
             ordered = sorted(data, key=lambda item: item["index"])
-            return [item["embedding"] for item in ordered]
+            raw = [item["embedding"] for item in ordered]
         except (KeyError, TypeError):
-            raise LLMOutputError(
-                f"{self.provider} returned an unexpected embeddings shape"
-            ) from None
+            raise LLMOutputError(f"{self.provider} returned malformed embeddings") from None
+        return validate_vectors(raw, len(texts), self.provider)
 
     def _post(self, path: str, payload: dict[str, Any]) -> dict[str, Any]:
         response = send(
