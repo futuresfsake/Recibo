@@ -4,9 +4,15 @@
   "private": true,
   "type": "module",
   "description": "Framework-free evidence contract: the types that make an unverified claim impossible to show.",
-  "exports": { ".": "./src/index.ts" },
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "mammoth": "^1.13.0",
+    "unpdf": "^1.9.1"
   }
 }

@@ -20,6 +20,7 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npm run trace
+      - run: npm run check:local-data
 
   secrets:
     runs-on: ubuntu-latest

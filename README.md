@@ -75,7 +75,8 @@ Useful scripts:
 
 | Command | What it does |
 |---|---|
-| `npm run check` | lint + type check + tests + traceability, the same gate as CI |
+| `npm run check` | lint + type check + tests + traceability + local-data guard, the same gate as CI |
+| `npm run fixtures` | Regenerate the synthetic resume fixtures used by the parsing regression tests |
 | `npm test` | Vitest across all workspaces |
 | `npm run trace` | Which FR/NFR IDs have tests, which are uncovered or orphaned |
 | `npm run build` | Production builds for api and web |

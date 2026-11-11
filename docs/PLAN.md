@@ -77,8 +77,11 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 
 ### M4 — Slice B: Fit Check
 - [ ] Parse resume with the provisional Q-17 libraries (`unpdf`, `mammoth`, own matcher), then sections, sections, PH normalization (FR-01, FR-02, FR-04)
-- [ ] Q-17 follow-ups before the libraries are final: two-column resume, scanned PDF (must return the "can't read this file" error, no OCR), 2-3 anonymized real resumes kept local and gitignored (never committed; record aggregate results only)
-- [ ] FR-07 rules built and tested: number guard (`40%` = `40 percent` = `forty percent`) and exact match for quotes under about 5 words
+- [x] Synthetic regression fixtures in `packages/proof/tests/fixtures/` (regenerate with `npm run fixtures`): two-column (column by column), two-column (row-interleaved), table-heavy DOCX, image-only PDF. Known gap: row-interleaved columns split wrapped sentences; a full-bullet quote then scores about 84 and is rejected (fail-safe, lower recall)
+- [ ] Real-resume check, local only: the owner's own resume or ones shared with explicit consent, kept in `local-data/` (gitignored; `npm run check:local-data`, the pre-commit hook and CI fail if it is tracked). Record aggregate results only
+- [ ] Decide whether column-aware extraction is worth building for the row-interleaved case, using the real-resume results
+- [ ] Image-only or unreadable PDF returns a clear "can't read this file" error (NFR-04), detected by empty extraction (fixture `image-only.pdf`)
+- [ ] FR-07 number parser: in-house pure function, table-driven tests, no new dependency. Compare `{value, isPercent}` with exact equality. Digits with commas/decimals, `%` / `percent` / `per cent`, `k` / `M` / `thousand` / `million`, number words zero to ninety-nine plus `hundred` (hyphenated or not). A range is two numbers and both must match. A number it cannot read makes the claim unverified. Plus exact match for quotes under about 5 words
 - [ ] Extract requirements (FR-03), in-memory retrieval (FR-05), batched judge (FR-06)
 - [ ] Verify citations, downgrade, flag (FR-07, FR-08): strict RED→GREEN, gated review
 - [ ] Score (FR-09), suggestions with verification, separate gap-actions list (FR-10)

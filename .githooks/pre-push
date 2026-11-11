@@ -4,4 +4,5 @@ npm run lint --silent   || { echo "BLOCKED: lint failed."; exit 1; }
 npm run typecheck --silent || { echo "BLOCKED: type check failed."; exit 1; }
 npm test --silent       || { echo "BLOCKED: tests failed."; exit 1; }
 node scripts/trace.mjs  || { echo "BLOCKED: traceability check failed."; exit 1; }
+node scripts/check-local-data.mjs || { echo "BLOCKED: local-data/ is tracked by git."; exit 1; }
 exit 0

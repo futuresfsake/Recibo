@@ -6,6 +6,10 @@ staged=$(git diff --cached --name-only --diff-filter=ACM)
 echo "$staged" | grep -E '(^|/)\.env($|\.)' | grep -v '\.env\.example$' && {
   echo "BLOCKED: .env file staged. Only .env.example may be committed."; exit 1; }
 
+# 1b. local-data/ holds real resumes for local checks only; never commit it, even with git add -f
+echo "$staged" | grep -E '(^|/)local-data/' && {
+  echo "BLOCKED: local-data/ must never be committed."; exit 1; }
+
 # 2. gitleaks if installed, otherwise a simple pattern scan
 if command -v gitleaks >/dev/null 2>&1; then
   gitleaks protect --staged --redact -c .gitleaks.toml || exit 1

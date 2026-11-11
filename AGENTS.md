@@ -10,7 +10,7 @@ Project background: `docs/PROJECT_CONTEXT.md`. Workflow and gates: `docs/AGENTIC
 2. Never let the LLM compute `fit_score`. TypeScript code does (`packages/proof/src/score.ts`).
 3. Never suggest adding a skill the resume does not show (suggestions only reframe verified experience).
 4. Never add a dependency that needs a paid key or a credit card.
-5. Never commit `.env`, keys, real resumes, or real personal data. Test and eval data use synthetic resumes only.
+5. Never commit `.env`, keys, real resumes, or real personal data. Test and eval data use synthetic resumes only. One local-only exception: the owner's own resume, or ones shared with explicit consent, may sit in the gitignored `local-data/` for local checks. It must never be tracked (`npm run check:local-data` enforces this), and only aggregate results may be recorded.
 6. Never hard-code prompts in source files; they live in `apps/api/src/prompts/`.
 7. Never call an LLM for data without a Zod schema, validation, and one retry.
 8. Never let the frontend (`apps/web`) call Ollama or the database directly; it talks only to `apps/api`.

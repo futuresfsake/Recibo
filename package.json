@@ -16,17 +16,21 @@
     "dev:api": "npm run dev -w @resibo/api",
     "dev:web": "npm run dev -w @resibo/web",
     "build": "npm run build --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present && vitest run scripts",
+    "fixtures": "node scripts/make-fixtures.mjs",
+    "check:local-data": "node scripts/check-local-data.mjs",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "eslint .",
     "trace": "node scripts/trace.mjs",
-    "check": "npm run lint && npm run typecheck && npm test && npm run trace"
+    "check": "npm run lint && npm run typecheck && npm test && npm run trace && npm run check:local-data"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "docx": "^9.15.3",
     "eslint": "^10.14.0",
     "globals": "^17.14.0",
     "npm-run-all2": "^8.0.4",
+    "pdfkit": "^0.20.2",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.2",
     "vitest": "^5.1.0"

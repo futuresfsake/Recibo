@@ -43,7 +43,7 @@ function* walk(dir) {
 
 function loadTestIds() {
   const found = new Map();
-  for (const top of ["apps", "packages", "evals"]) {
+  for (const top of ["apps", "packages", "evals", "scripts"]) {
     for (const file of walk(join(ROOT, top))) {
       const text = readFileSync(file, "utf8");
       for (const m of text.matchAll(TITLE)) {
