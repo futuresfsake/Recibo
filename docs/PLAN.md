@@ -41,7 +41,7 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 | Window | Work |
 |---|---|
 | now – 11-14 | Docs only; no feature work |
-| 11-16 – 11-30 | M1 Discovery + M2 Foundation (starts during interview prep, keep it small) |
+| 11-16 – 11-30 | M1 Data and taxonomy + M2 Foundation (starts during interview prep, keep it small) |
 | 12-08 – 12-31 | M3 Post Check, M4 Fit Check |
 | Jan 2027 | M5 PWA, M6 evals, M7 improve |
 | Feb 2027 | M8 deploy + pilot, M9 write-up, ready for applications |
@@ -54,13 +54,13 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 - [ ] Semgrep run in CI
 - **Done when:** a fake key commit is blocked locally and in CI.
 
-### M1 — Discovery and data
-- [ ] 8–10 job-seeker interviews + 2–3 recruiter/HR conversations; notes in `docs/research/` (anonymized)
+### M1 — Data and taxonomy
+- [x] ~~Job-seeker and recruiter interviews~~ skipped by owner decision (DECISIONS #31); pain points rest on published sources in `docs/research/EVIDENCE.md`. The M8 pilot is the real-user validation
 - [ ] 30+ hand-collected anonymized job posts: legit, borderline, scam-like (`evals/data/posts/`)
 - [ ] 5 synthetic resumes (IT, BPO, VA, nursing, data)
 - [ ] PH taxonomy YAML: TESDA NC levels, CSC eligibility, PRC licenses, honors, OJT, role synonyms, Taglish phrases
-- [ ] Re-rank pain points; update PRODUCT.md and, if needed, this plan
-- **Done when:** pain-point ranking written and the corpus exists.
+- [ ] Write the assumption into PRODUCT.md: pain points are based on published sources, not user interviews
+- **Done when:** the assumption is written down and the corpus, synthetic resumes and taxonomy exist.
 
 ### M2 — Foundation
 - [x] Express skeleton, `/health` (FR-13), React shell, `@resibo/proof` types

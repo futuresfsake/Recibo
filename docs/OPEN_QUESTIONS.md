@@ -12,7 +12,6 @@ Status is mutable; resolved items move to Closed and are not edited again. "Bloc
 | Q-06 | Who labels the 30–50 eval pairs; synthetic only? **Proposed:** synthetic resumes written by the owner; job posts collected by hand and anonymized | owner decides | M6 | proposed |
 | Q-07 | Which free hosted LLMs make up the provider chain, and their current limits and terms | fact needed | M8 | open |
 | Q-08 | Rename the GitHub repo `Recibo` to `Resibo`? | owner decides | none | open |
-| Q-10 | Is the interview sample (8–10 job seekers, 2–3 recruiters) reachable before M1 ends? Who? | owner | M1 | open |
 | Q-11 | Source and legality of collected job posts: hand-collected, anonymized, no scraping. Any employer-name handling rule? | owner decides | M1 | open |
 | Q-12 | Which official verification channels to link from Post Check (agency names and URLs must be verified current) | fact needed | M3 | open |
 | Q-13 | Backend host for the demo (cold starts vs. memory limits); verify at M8 | fact needed | M8 | open |
@@ -28,3 +27,4 @@ Status is mutable; resolved items move to Closed and are not edited again. "Bloc
 |---|---|---|---|
 | Q-09 | Unreadable or partially readable PDF: error or best-effort parse? | Error. Return a clear "can't read this file" message (NFR-04) and suggest DOCX or pasting text. No OCR: out of scope for this portfolio project | 2026-11-11 |
 | Q-19 | Rename endpoints to resource nouns? | No. Keep `/post-check` and `/analyze`: action endpoints, nothing stored by ID. Revisit if analyses get saved. FR-11 unchanged | 2026-11-11 |
+| Q-10 | Is the interview sample reachable before M1 ends? Who? | Moot. Interviews skipped by owner decision; assume pain points from published sources and validate in the M8 pilot (DECISIONS #31) | 2026-11-11 |

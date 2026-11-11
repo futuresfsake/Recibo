@@ -20,7 +20,7 @@ Researched **2026-11-09** via web search. Most sources are news coverage or thir
 
 ### Not yet evidenced
 
-P3 (silent rejections/ghosting), P5 (PH resume habits: photo, age, civil status), P6 (Taglish posts), P7 (AI tools inventing experience as a *user* problem), P8 (data cost). These stay hypotheses until the M1 interviews.
+P3 (silent rejections/ghosting), P5 (PH resume habits: photo, age, civil status), P6 (Taglish posts), P7 (AI tools inventing experience as a *user* problem), P8 (data cost). These stay hypotheses. The M1 interviews were skipped (DECISIONS #31), so the M8 pilot is where they get tested with real users.
 
 ## 2. Free-tier facts affecting the architecture
 
