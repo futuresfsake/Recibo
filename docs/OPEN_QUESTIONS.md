@@ -20,6 +20,8 @@ Status is mutable; resolved items move to Closed and are not edited again. "Bloc
 | Q-14 | Timeline: confirm the proposed windows against Queueless and interview dates | owner decides | none | open |
 | Q-15 | Capacity is about 20–30 analyses/day per provider (unmeasured). Add a bring-your-own-free-key mode (key held in the browser, never logged)? | owner decides after measuring tokens in M2 | M8 | open |
 | Q-16 | Fresh-grad statistics conflict between sources (38.2% vs 35.6%); cite only the PSA release. Who confirms the final numbers for the README? | owner | M9 | open |
+| Q-17 | Pick TypeScript libraries to replace the Python ones: fuzzy partial-match for quote verification (e.g. `fastest-levenshtein`, `fuse.js`, or a small custom partial-ratio), PDF text extraction, DOCX text extraction, BM25/embeddings. Must be free and maintained, and handle text vs. scanned PDFs (Q-09). Spike each on synthetic resumes first | fact needed, then owner decides | M4 | open |
+| Q-18 | Demo hosting: confirm Render free supports the Node 22 runtime, and that the static web build deploys separately (Cloudflare Pages) | fact needed | M8 | open |
 
 ## Closed
 

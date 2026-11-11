@@ -1,6 +1,6 @@
 # Requirements (v2)
 
-Stable IDs. Every test name contains the ID it proves (e.g. `test_FR07_exact_quote_verified`; Python names cannot hold a hyphen, so `FR-07` is written `FR07`). `scripts/trace.py` reports covered / uncovered / orphaned.
+Stable IDs. Every test title contains the ID it proves (e.g. `it("FR-07 exact quote is verified", …)`). `npm run trace` (`scripts/trace.mjs`) reports covered / uncovered / orphaned.
 
 Changing this file is a controlled action: only the owner, with the change logged in `docs/DECISIONS.md`.
 

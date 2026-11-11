@@ -1,10 +1,7 @@
 #!/bin/sh
-# Resibo pre-push: tests (if present) and requirement traceability.
-PY=python
-[ -x backend/.venv/Scripts/python.exe ] && PY="$(pwd)/backend/.venv/Scripts/python.exe"
-[ -x backend/.venv/bin/python ] && PY="$(pwd)/backend/.venv/bin/python"
-if ls backend/tests/test_*.py >/dev/null 2>&1; then
-  (cd backend && "$PY" -m pytest -q) || { echo "BLOCKED: tests failed."; exit 1; }
-fi
-"$PY" scripts/trace.py || { echo "BLOCKED: traceability check failed."; exit 1; }
+# Resibo pre-push: lint, types, tests, and requirement traceability.
+npm run lint --silent   || { echo "BLOCKED: lint failed."; exit 1; }
+npm run typecheck --silent || { echo "BLOCKED: type check failed."; exit 1; }
+npm test --silent       || { echo "BLOCKED: tests failed."; exit 1; }
+node scripts/trace.mjs  || { echo "BLOCKED: traceability check failed."; exit 1; }
 exit 0

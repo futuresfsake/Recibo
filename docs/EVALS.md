@@ -29,7 +29,7 @@ Mix: IT, BPO/CSR, VA, nursing, data. Strong, weak, and tricky fits (skill only i
 
 ## Runner
 
-`python evals/run_evals.py --model qwen2.5:7b` writes `evals/results/<timestamp>_<model>.json` and prints a summary table. Supports comparing two models.
+`npm run eval -- --model qwen2.5:7b` (planned, M6; implemented in `evals/run-evals.ts`) writes `evals/results/<timestamp>_<model>.json` and prints a summary table. Supports comparing two models. The runner imports the same `@resibo/proof` verifier and scorer the API uses, so evals measure the shipped code.
 
 ## Reporting
 

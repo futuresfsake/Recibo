@@ -1,0 +1,12 @@
+{
+  "name": "@resibo/proof",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Framework-free evidence contract: the types that make an unverified claim impossible to show.",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  }
+}

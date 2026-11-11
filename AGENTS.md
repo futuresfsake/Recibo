@@ -6,17 +6,17 @@ Project background: `docs/PROJECT_CONTEXT.md`. Workflow and gates: `docs/AGENTIC
 
 ## Never (testable negatives)
 
-1. Never show the user a claim without a verified evidence quote. A quote below `CITATION_MATCH_THRESHOLD` is dropped; no verified quotes left means rating `gap` and `hallucination_caught=true`.
-2. Never let the LLM compute `fit_score`. Python does (`pipeline/score.py`).
+1. Never show the user a claim without a verified evidence quote. A quote below `CITATION_MATCH_THRESHOLD` is dropped; no verified quotes left means rating `gap` and `hallucination_caught=true`. The `VerifiedQuote` brand in `packages/proof` enforces this at compile time: never cast to it (`as VerifiedQuote`) outside the verifier. The `VerifiedQuote` brand in `packages/proof` enforces this at compile time: never cast to it (`as VerifiedQuote`) outside the verifier.
+2. Never let the LLM compute `fit_score`. TypeScript code does (`packages/proof/src/score.ts`).
 3. Never suggest adding a skill the resume does not show (suggestions only reframe verified experience).
 4. Never add a dependency that needs a paid key or a credit card.
 5. Never commit `.env`, keys, real resumes, or real personal data. Test and eval data use synthetic resumes only.
-6. Never hard-code prompts in Python; they live in `backend/app/prompts/`.
-7. Never call an LLM for data without a Pydantic schema, validation, and one retry.
-8. Never let the frontend call Ollama or the database directly.
+6. Never hard-code prompts in source files; they live in `apps/api/src/prompts/`.
+7. Never call an LLM for data without a Zod schema, validation, and one retry.
+8. Never let the frontend (`apps/web`) call Ollama or the database directly; it talks only to `apps/api`.
 9. Never use LangChain or similar orchestration frameworks.
 10. Never edit `docs/REQUIREMENTS.md` to make an inconvenient requirement go away. Raise it in `docs/OPEN_QUESTIONS.md` instead.
-11. Never write a test whose title lacks a requirement ID (`FR-xx` / `NFR-xx`).
+11. Never write a test whose title lacks a requirement ID (`FR-xx` / `NFR-xx`), e.g. `it("FR-07 exact quote is verified", …)`.
 12. Never mark work done using criteria you invented; use the DoD in `docs/AGENTIC_WORKFLOW.md`.
 13. Never persist or log resume or job-post text server-side (metadata only). History lives in the browser.
 14. Never present Post Check output as a verdict. It reports signals with quotes; the LLM may explain signals but never add new ones.
@@ -45,9 +45,9 @@ Separate from the app's data rules: never paste credentials, real names, or real
 |---|---|---|
 | Good-looking AI answer downgraded to `gap` | No quote passed verification; that is the guardrail | `verify_citations`, FR-08 |
 | Score is identical for rephrased explanations | Score comes from ratings and weights in Python | `score.py`, FR-09 |
-| Backend duplicates Ollama retry logic per call | One retry, visible on purpose; no framework | CODING rule |
+| API duplicates Ollama retry logic per call | One retry, visible on purpose; no framework | CODING rule |
 | `LLMClient` interface with only one real client early on | Needed for free hosted deploy swap | `docs/DECISIONS.md` #5 |
 
 ## Coding rules
 
-Type hints everywhere in Python; strict TypeScript. Small focused commits, one concern each. Tests for pipeline functions, especially `verify_citations` and `score`. Windows (cmd) compatible commands in docs.
+Strict TypeScript everywhere (`strict`, `noUncheckedIndexedAccess`); no `any` without a comment saying why. Deterministic logic goes in `packages/proof`, not in Express routes or React components. Small focused commits, one concern each. Tests for pipeline functions, especially `verifyCitations` and `score`. Windows (cmd) compatible commands in docs.

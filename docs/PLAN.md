@@ -15,13 +15,23 @@
 | Build first, ask users later | Validate pain points before building past the skeleton | Avoid building what nobody needs |
 | Server-side history | Browser-side history | Privacy |
 
+## What changed in v2.1 (2026-11-11)
+
+| v2 | v2.1 | Why |
+|---|---|---|
+| FastAPI + Pydantic backend | Node.js + Express 5 + TypeScript, Zod | Owner's stack choice; one language end to end |
+| Next.js PWA | React + Vite PWA (static build) | The app is fully static; no server rendering needed |
+| `backend/` + `frontend/` | npm workspaces: `apps/api`, `apps/web`, `packages/proof` | Deterministic core isolated and shared; testable without HTTP |
+| "Never show unverified claims" as a rule | Enforced by a branded `VerifiedQuote` type | Compiler-level guarantee for the project's core promise |
+
 ## Status
 
 | Item | State |
 |---|---|
 | Docs, rules, requirements, workflow | done |
 | Hooks (secrets, audit log, tests, trace), CI file, semgrep config | done (ggshield pending login) |
-| FastAPI skeleton + `/health` + tests | done |
+| Stack moved to Node.js + Express + React monorepo (DECISIONS #17–#22) | done |
+| Express skeleton + `/health` + tests (ported from FastAPI), React shell, `@resibo/proof` evidence types | done |
 | Everything below | not started |
 
 ## Timeline (proposed, confirm)
@@ -53,10 +63,10 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 - **Done when:** pain-point ranking written and the corpus exists.
 
 ### M2 — Foundation
-- [x] FastAPI skeleton, `/health`
+- [x] Express skeleton, `/health` (FR-13), React shell, `@resibo/proof` types
 - [ ] `LLMClient` interface, Ollama client, OpenAI-compatible client
 - [ ] LLM router: provider chain, timeout, circuit breaker, cache, schema validation, retry once, metadata-only call log (FR-14, FR-21, FR-22)
-- [ ] Pydantic schemas for all LLM outputs
+- [ ] Zod schemas for all LLM outputs
 - **Done when:** a structured call succeeds locally and falls back to a second provider when the first is forced to fail (test).
 
 ### M3 — Slice A: Post Check
@@ -66,7 +76,7 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 - **Done when:** works with the LLM switched off, and eval numbers are recorded.
 
 ### M4 — Slice B: Fit Check
-- [ ] Parse resume, sections, PH normalization (FR-01, FR-02, FR-04)
+- [ ] Resolve Q-17 (TypeScript libraries for fuzzy match and PDF/DOCX), then parse resume, sections, PH normalization (FR-01, FR-02, FR-04)
 - [ ] Extract requirements (FR-03), in-memory retrieval (FR-05), batched judge (FR-06)
 - [ ] Verify citations, downgrade, flag (FR-07, FR-08): strict RED→GREEN, gated review
 - [ ] Score (FR-09), suggestions with verification, separate gap-actions list (FR-10)
@@ -74,13 +84,13 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 - **Done when:** end-to-end analysis on 5 synthetic resumes, with `verify_citations` and `score` fully unit tested.
 
 ### M5 — PWA frontend
-- [ ] Static Next.js app: Post Check page, Fit Check page, results with highlighted resibo and rejected-claim badge (FR-15)
+- [ ] React + Vite PWA (static build): Post Check page, Fit Check page, results with highlighted resibo and rejected-claim badge (FR-15)
 - [ ] Browser-side history (FR-23), mobile-first at 360 px (NFR-13)
 - **Done when:** both tools usable on a phone-width viewport against the local API.
 
 ### M6 — Eval suite (grows from M3 onward)
 - [ ] 30–50 labeled resume/post pairs (strong, weak, tricky; PH roles; Taglish)
-- [ ] `metrics.py`, `run_evals.py --model`, two-model comparison
+- [ ] `evals/metrics.ts`, `evals/run-evals.ts --model`, two-model comparison
 - [ ] Hallucination (raw/final), rating accuracy, bias swaps, consistency, latency, injection, Post Check precision/recall
 - **Done when:** one command prints the full table and writes a timestamped result file.
 

@@ -1,4 +1,18 @@
-# Architecture (v2, cost-free, privacy-first)
+# Architecture (v2.1: Node.js + Express + React, cost-free, privacy-first)
+
+## Workspace layout
+
+npm workspaces monorepo. Dependencies point one way: `apps/*` → `packages/proof`.
+
+| Workspace | Role |
+|---|---|
+| `packages/proof` | Framework-free core: the evidence contract (types), PH taxonomy loader, Post Check rules, quote verifier, scorer. No Express, no React, no network. Everything here is unit-testable in isolation. |
+| `apps/api` | Express 5 + TypeScript. Config (Zod), routes, dependency probes, LLM router, prompts (`src/prompts/`). Orchestrates; contains no scoring or verification logic. |
+| `apps/web` | React + Vite PWA. Talks only to the API. Imports types from `@resibo/proof`, never its logic. |
+
+## Principle 0: the proof is a type
+
+`VerifiedQuote` is a branded type. Only the verifier in `packages/proof` can produce one, and `Finding.evidence` accepts only `VerifiedQuote[]`. A raw LLM quote cannot reach the API response or the UI without failing to compile. This turns AGENTS.md rule #1 into a compiler guarantee; tests then cover the verifier's behavior (FR-07, FR-08).
 
 ## Principles
 
@@ -11,15 +25,15 @@
 ## System
 
 ```
- Phone / browser (Next.js PWA, static export)
+ Phone / browser (React + Vite PWA, static build)
    │  history in IndexedDB (browser only)
    ▼
- FastAPI (stateless)
+ Express API (Node.js, stateless)
    ├─ Rule engine ........ Post Check red-flag rules, PH taxonomy (YAML)   [no LLM]
-   ├─ Parser ............. PDF/DOCX → text + sections                      [no LLM]
+   ├─ Parser ............. PDF/DOCX → text + sections (library: Q-17)      [no LLM]
    ├─ Retriever .......... in-memory: BM25 + small embeddings per request  [no DB]
-   ├─ Verifier ........... rapidfuzz quote check, downgrade, flag           [no LLM]
-   ├─ Scorer ............. weighted 0–100                                  [no LLM]
+   ├─ Verifier ........... fuzzy quote check, downgrade, flag (Q-17)        [no LLM]
+   ├─ Scorer ............. weighted 0–100, in TypeScript                   [no LLM]
    └─ LLM router ......... provider chain, cache, schema validation, retry
          ├─ Ollama (local dev)
          └─ free hosted OpenAI-compatible providers (ordered, with fallback)
@@ -39,7 +53,7 @@
 4. `retrieve` (D): per requirement, top-k resume chunks (BM25 + in-memory embeddings).
 5. `judge` (L): **one batched call** for all requirements → rating, explanation, exact quotes.
 6. `verify_citations` (D): fuzzy-match each quote; below threshold, drop it; none left → `gap` + `hallucination_caught`.
-7. `score` (D): Python, required > preferred.
+7. `score` (D): TypeScript, required > preferred.
 8. `suggest` (L) + `verify` (D): reframing tips must cite verified quotes; the gap-actions list is generated separately and labeled "not on your resume".
 
 (D) = deterministic, (L) = LLM call. Budget: **at most 3 LLM calls per analysis** (extract, judge, suggest). Post Check: 0–1.
@@ -48,9 +62,9 @@
 
 - Interface `LLMClient` (`generate_structured`, `embed`); implementations: `ollama_client`, `openai_compat_client`.
 - Ordered provider list from config; per-provider timeout and circuit breaker; on quota/429/timeout, try the next.
-- Structured output with JSON schema, Pydantic validation, one retry, `temperature=0`.
+- Structured output with a JSON schema generated from the Zod schema, Zod validation, one retry, `temperature=0`.
 - Response cache keyed by SHA-256 of (prompt version, model, inputs); in memory, never persisted. Identical re-submits cost zero calls.
-- Prompts are versioned files in `app/prompts/`; the version is part of the cache key and the eval record.
+- Prompts are versioned files in `apps/api/src/prompts/`; the version is part of the cache key and the eval record.
 - If all providers fail: return deterministic-only results with an explicit "AI explanation unavailable" state.
 
 ## Abuse and cost control (the public demo is a free-quota target)
@@ -69,7 +83,7 @@
 
 | Endpoint | Purpose |
 |---|---|
-| `GET /health` | DB (if configured), LLM providers reachable |
+| `GET /health` | DB (if configured; "not configured" counts as healthy), LLM providers reachable |
 | `POST /post-check` | job post text → signals with quotes |
 | `POST /analyze` | resume file + job text → full analysis |
 
@@ -94,3 +108,5 @@ No `/history` on the server in v1 (browser-side). Response shapes: `docs/PROJECT
 | Batched judge call | Fewer free-tier calls, lower latency | Longer prompt; evals must confirm accuracy vs. per-requirement calls |
 | Rules before LLM for scams | Deterministic, testable, works offline | Needs a good corpus and maintenance |
 | Static frontend | Free CDN hosting, fast on mobile | No server rendering needs; fine here |
+| One language end to end (TypeScript) | Shared types between api and web, one toolchain, the evidence contract enforced by the compiler | Fewer mature NLP/PDF libraries than Python; chosen libraries are tracked in Q-17 |
+| Core logic in `packages/proof`, not in Express routes | Verifier and scorer testable without HTTP; the web app can share types without importing server code | One more workspace to maintain |

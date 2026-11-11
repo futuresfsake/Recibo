@@ -18,3 +18,9 @@
 | 14 | Post Check outputs signals with quotes, never a scam verdict | Avoid falsely accusing legitimate employers; keep the resibo principle |
 | 15 | Eval-first: golden cases grow with each slice | Evals are the portfolio differentiator |
 | 16 | Remove hard-coded DB password; URL built from env parts; history rewritten and force-pushed once on 2026-11-09 | Secret scanner flagged a generic password |
+| 17 | **Stack change (2026-11-11): Node.js + Express 5 + TypeScript API and a React + Vite PWA frontend, replacing FastAPI/Pydantic and the planned Next.js app.** Still no LangChain (#2) | Owner chose the Node/Express/React stack: one language end to end, shared types, familiar tooling. Skeleton and `/health` ported with tests |
+| 18 | Monorepo with npm workspaces: `apps/api`, `apps/web`, `packages/proof` | Deterministic core (verifier, scorer, rules) isolated from Express and React; testable alone; shared by evals |
+| 19 | The evidence contract is a branded TypeScript type (`VerifiedQuote`); only the verifier mints it | Turns AGENTS.md rule #1 from a convention into a compile-time guarantee. Refines #3: still verified in code, now also enforced by types |
+| 20 | Zod replaces Pydantic; Vitest + Supertest replace pytest; ESLint + `tsc` replace ruff + mypy; `scripts/trace.mjs` replaces `trace.py` | Native to the new stack. Library choices for fuzzy matching and PDF/DOCX parsing deferred to Q-17 (supersedes rapidfuzz, pdfplumber, python-docx) |
+| 21 | Postgres counts as "not configured" (healthy) when no password is set; compose file moved to `infra/` | DB is dev/eval only (#12), so its absence must not mark the API degraded |
+| 22 | Edited `AGENTS.md`, `docs/AGENTIC_WORKFLOW.md`, `docs/EVALS.md`, and the test-naming header of `docs/REQUIREMENTS.md` to match the new stack. No requirement row was changed | Requirement rows are stack-neutral; only tooling language changed. Owner-requested |

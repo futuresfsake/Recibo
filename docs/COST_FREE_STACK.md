@@ -8,7 +8,7 @@ Rule: ₱0 and no credit card at any layer. Free-tier terms change, so every row
 | Dev embeddings | Ollama `nomic-embed-text` | Local | No | none | BM25-only retrieval |
 | Hosted LLM (demo) | Ordered chain: Groq first, Gemini second, Cloudflare Workers AI third, OpenRouter free models last. Researched 2026-11-09; see `research/EVIDENCE.md` | Free quotas | **verify per provider** | **Token caps bind first (about 20–30 analyses/day on one provider, unmeasured estimate)**; ToS changes | Next provider; deterministic-only mode; bring-your-own-key option (Q-15); demo video |
 | Frontend hosting | Cloudflare Pages or Vercel Hobby — **verify** (Vercel Hobby is non-commercial) | Free static hosting | No | Terms | Either one; GitHub Pages |
-| Backend hosting | **Render free web service** (sleeps after 15 min idle, about 1 min wake, 750 shared hours/month). Hugging Face Spaces dropped: Docker Spaces reportedly need a paid plan | Free tier | **verify** | Cold starts; terms say not for production | Keep API light (no local model); show a "waking up" state; ping on page load |
+| Backend hosting | **Render free web service** (sleeps after 15 min idle, about 1 min wake, 750 shared hours/month). Hugging Face Spaces dropped: Docker Spaces reportedly need a paid plan | Free tier | **verify** | Cold starts; terms say not for production | Keep the Node API light (no local model); show a "waking up" state; ping on page load |
 | Database | None in production. Dev/eval: Postgres + pgvector in Docker | Local | No | none | If ever needed: Neon or Supabase free |
 | Bot protection | Cloudflare Turnstile — **verify** | Free tier | No | none | Per-IP rate limit only |
 | CI | GitHub Actions (public repo) | Free minutes | No | Minutes cap | Run checks via local hooks |

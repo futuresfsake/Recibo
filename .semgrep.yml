@@ -1,32 +1,28 @@
 rules:
   - id: resibo-no-eval
-    languages: [python]
+    languages: [typescript, javascript]
     severity: ERROR
-    message: Do not use eval/exec; parse structured data instead.
+    message: Do not use eval or new Function; parse structured data instead.
     pattern-either:
       - pattern: eval(...)
-      - pattern: exec(...)
+      - pattern: new Function(...)
 
   - id: resibo-no-sql-string-building
-    languages: [python]
+    languages: [typescript, javascript]
     severity: ERROR
-    message: Build SQL with bound parameters, not f-strings or concatenation.
+    message: Build SQL with bound parameters ($1, $2), not template strings or concatenation.
     pattern-either:
-      - pattern: $CONN.execute(f"...")
-      - pattern: $CONN.execute("..." + $X)
-      - pattern: $CONN.execute("...".format(...))
+      - pattern: $DB.query(`...${$X}...`)
+      - pattern: $DB.query("..." + $X)
 
   - id: resibo-no-hardcoded-api-key
-    languages: [python]
+    languages: [typescript, javascript]
     severity: ERROR
-    message: Read keys from settings/env, never hard-code them.
-    pattern-regex: (api_key|API_KEY)\s*=\s*["'][A-Za-z0-9_\-]{16,}["']
+    message: Read keys from config/env, never hard-code them.
+    pattern-regex: (api_?key|API_?KEY)\s*[:=]\s*["'][A-Za-z0-9_\-]{16,}["']
 
   - id: resibo-no-langchain
-    languages: [python]
+    languages: [typescript, javascript]
     severity: ERROR
     message: Project rule - no LangChain; call the LLM client directly.
-    pattern-either:
-      - pattern: import langchain
-      - pattern: from langchain import ...
-      - pattern: from langchain_core import ...
+    pattern-regex: (from\s+|require\(\s*)["']@?langchain

@@ -1,9 +1,6 @@
 .env
-__pycache__/
-*.pyc
 node_modules/
-.venv/
-.next/
-.pytest_cache/
+dist/
+*.tsbuildinfo
 evals/results/*.json
 !evals/results/.gitkeep

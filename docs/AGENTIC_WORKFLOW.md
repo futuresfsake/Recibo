@@ -8,7 +8,7 @@ How AI agents and humans build Resibo safely. Target maturity: **Level 3 (gated-
 |---|---|---|
 | Rules: how to work | `AGENTS.md` | Never-lists, scope, confidentiality |
 | Spec: what to build | `docs/REQUIREMENTS.md` | FR/NFR IDs |
-| Background | `docs/PROJECT_CONTEXT.md` | Stack, pipeline, API shape |
+| Background | `docs/PROJECT_CONTEXT.md` | Stack, pipeline, API shape (v1 background; where it conflicts with `ARCHITECTURE.md`, the latter wins) |
 | Plan | `docs/PLAN.md` | Milestones and tasks |
 | Register | `docs/OPEN_QUESTIONS.md`, `docs/DECISIONS.md` | Gaps and settled choices |
 | Task | the prompt for the current task | What to do now |
@@ -23,7 +23,7 @@ Conflict rule is at the top of `AGENTS.md`. A conflict is reported, not silently
 4. **Gate**: DoD checklist below, verified by a fresh-context review (a separate agent session or the owner), not by the session that wrote the code.
 5. **Commit** small, push, append an entry to the audit log.
 
-For `verify_citations`, `score`, prompt-injection handling, and anything touching resume data: strict per-case RED→GREEN, and the review gate is always run (no skipping).
+For `verifyCitations`, `score`, prompt-injection handling, and anything touching resume data: strict per-case RED→GREEN, and the review gate is always run (no skipping).
 
 ## 3. Definition of Ready (DoR)
 
@@ -35,8 +35,8 @@ For `verify_citations`, `score`, prompt-injection handling, and anything touchin
 ## 4. Definition of Done (DoD)
 
 - [ ] Tests exist, titles carry requirement IDs, no stubs counted as passing
-- [ ] `pytest` green; `scripts/trace.py` shows no uncovered ID for this task
-- [ ] Type check and lint clean (`mypy`/`ruff` for backend, `tsc --noEmit` for frontend)
+- [ ] `npm test` green; `npm run trace` shows no uncovered ID for this task (`npm run check` runs everything)
+- [ ] Type check and lint clean (`npm run typecheck`, `npm run lint`)
 - [ ] Secrets scan clean
 - [ ] Errors handled per NFR-04 where relevant
 - [ ] Docs updated (README/ARCHITECTURE/PLAN checkbox)
@@ -51,8 +51,8 @@ For `verify_citations`, `score`, prompt-injection handling, and anything touchin
 
 ## 6. Traceability
 
-- Tests: `test_FR07_<what>` (literal ID in the title).
-- `scripts/trace.py` reads `docs/REQUIREMENTS.md` and pytest JUnit XML, then reports covered / uncovered / orphaned. It runs in CI and the pre-push hook as a gate.
+- Tests: `it("FR-07 <what>", …)` (literal ID in the title).
+- `scripts/trace.mjs` (`npm run trace`) reads `docs/REQUIREMENTS.md` and scans `*.test.ts` titles under `apps/`, `packages/` and `evals/`, then reports covered / uncovered / orphaned. It runs in CI and the pre-push hook as a gate.
 
 ## 7. Audit log
 
@@ -69,14 +69,14 @@ Sort by `ts`, not file position. Derived metrics for the README: first-pass rate
 | Guard | Mechanism |
 |---|---|
 | No secrets | pre-commit secrets scan (gitleaks), `.env` ignored |
-| Static analysis | semgrep with a small ruleset (no `eval`, no hard-coded keys, no raw SQL string-building) |
-| Hooks | `.githooks/` : pre-commit (scan, lint), pre-push (tests, trace) |
+| Static analysis | ESLint (`no-eval`, `no-new-func`) and semgrep with a small TypeScript ruleset (no `eval`, no hard-coded keys, no SQL string-building, no LangChain) |
+| Hooks | `.githooks/` : pre-commit (secrets scan), pre-push (lint, types, tests, trace) |
 | Commit style | one concern per commit, message says what and why |
 | Branches | feature branch per task, merge when DoD met; worktrees only if running tasks in parallel |
 
 ## 9. Agent evaluation
 
-The product evals (`docs/EVALS.md`) are separate from agent-process evals. Process metrics come from the audit log. Keep 3 golden tasks (e.g. implement `verify_citations`, add a prompt, add an endpoint) to re-run after changing `AGENTS.md`.
+The product evals (`docs/EVALS.md`) are separate from agent-process evals. Process metrics come from the audit log. Keep 3 golden tasks (e.g. implement `verifyCitations`, add a prompt, add an endpoint) to re-run after changing `AGENTS.md`.
 
 ## 10. Governance
 
