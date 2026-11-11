@@ -6,7 +6,7 @@ npm workspaces monorepo. Dependencies point one way: `apps/*` → `packages/proo
 
 | Workspace | Role |
 |---|---|
-| `packages/proof` | Framework-free core: the evidence contract (types), PH taxonomy loader, Post Check rules, quote verifier, scorer. No Express, no React, no network. Everything here is unit-testable in isolation. |
+| `packages/proof` | Framework-free core: the evidence contract (types), Post Check rules, quote verifier, scorer. No Express, no React, no network. Everything here is unit-testable in isolation. |
 | `apps/api` | Express 5 + TypeScript. Config (Zod), routes, dependency probes, LLM router, prompts (`src/prompts/`). Orchestrates; contains no scoring or verification logic. |
 | `apps/web` | React + Vite PWA. Talks only to the API. Imports types from `@resibo/proof`, never its logic. |
 
@@ -16,7 +16,7 @@ npm workspaces monorepo. Dependencies point one way: `apps/*` → `packages/proo
 
 ## Principles
 
-1. **Deterministic first, LLM last.** Code does everything it can (parsing, PH taxonomy, red-flag rules, quote verification, scoring). The LLM is used only where language understanding is needed.
+1. **Deterministic first, LLM last.** Code does everything it can (parsing, red-flag rules, quote verification, scoring). The LLM is used only where language understanding is needed.
 2. **Stateless and private by default.** No resume or job text stored or logged server-side. History lives in the user's browser.
 3. **Every external dependency is swappable** behind an interface (LLM, embeddings).
 4. **Degrade, don't fail.** If the LLM is down or out of quota, the deterministic tools still work.
@@ -29,7 +29,7 @@ npm workspaces monorepo. Dependencies point one way: `apps/*` → `packages/proo
    │  history in IndexedDB (browser only)
    ▼
  Express API (Node.js, stateless)
-   ├─ Rule engine ........ Post Check red-flag rules, PH taxonomy (YAML)   [no LLM]
+   ├─ Rule engine ........ Post Check red-flag rules                        [no LLM]
    ├─ Parser ............. PDF/DOCX → text + sections (library: Q-17)      [no LLM]
    ├─ Retriever .......... in-memory: BM25 + small embeddings per request  [no DB]
    ├─ Verifier ........... fuzzy quote check, downgrade, flag (Q-17)        [no LLM]
@@ -48,7 +48,7 @@ npm workspaces monorepo. Dependencies point one way: `apps/*` → `packages/proo
 
 **Fit Check** (`POST /analyze`)
 1. `parse_resume` (D)
-2. `normalize` (D): PH taxonomy maps TESDA NC, CSC eligibility, PRC licenses, Latin honors, OJT, role synonyms.
+2. `normalize` (D): whitespace and case only. There is no curated PH lookup list (known gap, DECISIONS #32); TESDA NC, Civil Service, PRC and Taglish terms are handled by the LLM prompts and checked by the eval cases.
 3. `extract_requirements` (L): job text → requirements JSON.
 4. `retrieve` (D): per requirement, top-k resume chunks (BM25 + in-memory embeddings).
 5. `judge` (L): **one batched call** for all requirements → rating, explanation, exact quotes.

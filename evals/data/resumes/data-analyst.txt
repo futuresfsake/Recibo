@@ -1,0 +1,32 @@
+SYNTHETIC RESUME - FICTIONAL PERSON - FOR TESTS ONLY
+
+LIA MOCK FERNANDEZ
+Quezon City | lia.mock@example.invalid | 09XX XXX XXXX
+
+SUMMARY
+Entry-level data analyst with a statistics degree and a year of internship and project experience in reporting and dashboards.
+
+EDUCATION
+Bachelor of Science in Statistics
+Sample University of the Philippines Campus | 2021 - 2025
+Graduated cum laude | Latin honors, thesis on household income forecasting
+
+EXPERIENCE
+Data Analyst Intern, Sample Retail Group | Jun 2025 - Dec 2025
+- Built a weekly sales dashboard in Power BI used by 12 store managers.
+- Cleaned and merged sales files with SQL and pandas, making the weekly report forty percent faster to prepare.
+- Wrote 15 SQL queries for recurring reports and documented each one.
+- Presented findings to a team of 8 people twice a month.
+
+PROJECTS
+Jeepney Fare Study | 2024
+- Collected 450 survey responses and analyzed fare affordability with Python and Excel.
+Thesis: Household Income Forecasting | 2024 - 2025
+- Compared regression and time-series models on a public PSA dataset of about 50,000 records.
+
+SKILLS
+SQL, Python (pandas, matplotlib), Excel, Power BI, R (basic), statistics, data cleaning, report writing
+
+CERTIFICATIONS
+Civil Service Professional eligibility (2025)
+Google Data Analytics Certificate (2025)

@@ -1,0 +1,35 @@
+SYNTHETIC RESUME - FICTIONAL PERSON - FOR TESTS ONLY
+
+JOSE MOCK REYES
+Cebu City, Philippines | jose.mock@example.invalid | 09XX XXX XXXX
+Age: 22 | Civil status: Single
+
+OBJECTIVE
+Fresh graduate seeking an entry-level web developer role.
+
+EDUCATION
+Bachelor of Science in Information Technology
+Sample State University, Cebu City | 2022 - 2026
+Graduated cum laude | Dean's Lister, 6 semesters
+Relevant coursework: Data Structures, Database Systems, Object-Oriented Programming (Java)
+
+EXPERIENCE
+OJT Web Developer, Sample Tech Corp | Jun 2025 - Aug 2025 (320 hours)
+- Built an inventory dashboard using React and Node.js that reduced manual stock encoding time by 40% for the warehouse team.
+- Wrote REST endpoints with Express and added unit tests with Vitest, raising coverage from 35 percent to 80 percent.
+- Fixed 15-20 reported bugs during the internship.
+
+PROJECTS
+Barangay Queue App | 2025
+- Queue system for a health center handling about 1,200 patients per month, built with React, Express and PostgreSQL.
+Capstone: Campus Events Portal | 2025 - 2026
+- Team of four; I built the login, event listing and admin pages in JavaScript and TypeScript.
+
+SKILLS
+JavaScript, TypeScript, React, Node.js, Express, PostgreSQL, SQL, Git, Figma
+
+CERTIFICATIONS
+TESDA NC II - Computer Systems Servicing (2023)
+
+INTERESTS
+Basketball, hobby scripting in Python to automate small chores, mobile photography

@@ -7,7 +7,7 @@
 
 ## Pain points
 
-Everything below is a **hypothesis until validated** (see "Validation"). Evidence level says how sure we are today.
+These pain points rest on **published sources and common job-search behavior, not on user interviews** (the interviews were skipped, DECISIONS #31). Treat everything below as an assumption until the M8 pilot tests it with real users. Evidence level says how sure we are today.
 
 | # | Pain | Evidence level | Resibo response |
 |---|---|---|---|
@@ -27,7 +27,7 @@ Everything below is a **hypothesis until validated** (see "Validation"). Evidenc
 **Principle:** every claim carries a resibo. For fit, the resibo is a quote from the resume. For red flags, it is a quote from the job post. Quotes are verified by code, not by the model.
 
 1. **Post Check** — paste a job post, get red-flag signals (fee requests, vague employer, personal-account contact, unrealistic pay, no interview). Rules run first with no LLM; the LLM only explains in plain language. Output is **advisory signals with quotes, never a verdict** ("signals found", not "this is a scam"), plus pointers to official verification channels.
-2. **Fit Check** — resume vs. post: requirement list, strong/partial/gap ratings, verified quotes, fit score computed in Python.
+2. **Fit Check** — resume vs. post: requirement list, strong/partial/gap ratings, verified quotes, fit score computed in code, never by the LLM.
 3. **Next Steps** — (a) reframing tips that only use verified experience; (b) separate list of gaps with honest actions to *earn* the missing item. Never mixed: earning actions are not claims about the resume.
 
 ## Success metrics
@@ -40,11 +40,15 @@ Everything below is a **hypothesis until validated** (see "Validation"). Evidenc
 | Reach | Real users in pilot | 10 |
 | Usefulness | Pilot users who say it changed whether or how they apply | collected by short survey |
 
-## Validation (before building past the skeleton)
+## Validation (revised: interviews skipped, DECISIONS #31)
+
+The original plan was steps 1 and 3 below. Only step 2 stays before building; real-user validation moves to the M8 pilot (10 users plus a short survey), which tests the ranking against a working product.
+
+~~1. Interview 8–10 Filipino job seekers and 2–3 recruiters/HR.~~ Skipped.
 
 1. Interview 8–10 Filipino job seekers (fresh grads first) and 2–3 recruiters/HR: what made you not apply last time, have you met a scam post, what do you do about your resume.
 2. Collect 30+ anonymized real job posts by hand (no scraping): legit, borderline, scam-like. This is also the Post Check eval corpus.
-3. Rank P1–P10 by what people actually say. If P1 (scams) outranks P2 (fit), build Post Check first. It is the plan's default order already.
+3. ~~Rank P1–P10 by what people say.~~ Replaced: build Post Check first (the plan's default order, backed by the sourced P1 evidence), then re-rank after the pilot.
 
 ## Non-goals (v1)
 

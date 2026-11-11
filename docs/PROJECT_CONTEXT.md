@@ -11,7 +11,7 @@ Resibo helps Filipino job seekers check job posts and compare a resume against a
 
 **Every claim the AI makes must be backed by a "resibo": an exact quote from the resume. The code checks each quote programmatically. Claims without verified evidence are rejected, and the type system makes showing one a compile error.**
 
-It's built for **Filipino job seekers** and understands PH-specific credentials and job posts.
+It's built for **Filipino job seekers** and is aimed at PH-specific credentials and job posts. These are handled by the LLM prompts and eval cases, with no curated taxonomy (known gap, DECISIONS #32).
 
 Its purpose is to be a portfolio project for AI engineering internship applications in 2027. The **evaluation results** (hallucination rate, citation accuracy, bias, consistency) are as important as the app itself.
 

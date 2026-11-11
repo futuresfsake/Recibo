@@ -15,7 +15,7 @@ Three free tools for Filipino job seekers, one rule: **every claim comes with pr
 
 - Scam posts, unclear requirements and silent rejections are everyday problems for Filipino applicants ([docs/PRODUCT.md](docs/PRODUCT.md)).
 - AI resume tools invent experience. Resibo measures that and blocks it.
-- Understands PH context: TESDA NC, Civil Service, PRC licenses, Latin honors, OJT, Taglish posts.
+- Aimed at the Philippine job market (TESDA NC, Civil Service, PRC licenses, OJT, Taglish posts). PH terms are handled by the LLM prompts and eval cases, not a curated lookup list: a known gap ([docs/DECISIONS.md](docs/DECISIONS.md) #32).
 - ₱0 to run, no card. Private by default: nothing stored server-side ([docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/COST_FREE_STACK.md](docs/COST_FREE_STACK.md)).
 
 ## What makes it different: the proof is a type
