@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>States · Resibo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="screen">
+  <header class="masthead"><a class="wordmark" href="index.html">resibo</a><span class="tag">states</span></header>
+
+  <main>
+    <h1>When things go wrong</h1>
+    <p class="lede">Plain words, no blame, and always a next move. Error shape comes from the API: <code>error.message</code>.</p>
+
+    <section class="receipt" aria-labelledby="s1">
+      <h2 id="s1">Unreadable file</h2>
+      <p class="item-title">We can't read this file.</p>
+      <p>It looks like a scan or a picture of a page. Try a DOCX, or paste the text of your resume instead.</p>
+      <div class="actions"><a class="btn" href="fit-check.html">Paste the text</a></div>
+    </section>
+
+    <section class="receipt" aria-labelledby="s2">
+      <h2 id="s2">Server is waking up</h2>
+      <p class="item-title">Waking up the server.</p>
+      <p>This can take about a minute the first time. We will retry on our own.</p>
+      <p class="meta">Free hosting sleeps when nobody is using it.</p>
+    </section>
+
+    <section class="receipt" aria-labelledby="s3">
+      <h2 id="s3">AI unavailable</h2>
+      <p class="item-title">AI explanation unavailable right now.</p>
+      <p>The checks that run without AI still worked. Your signals are below; only the plain-words explanation is missing.</p>
+      <p class="stamp stamp--ink">Result without AI</p>
+    </section>
+
+    <section class="receipt" aria-labelledby="s4">
+      <h2 id="s4">Too many checks</h2>
+      <p class="item-title">That's a lot of checks in a short time.</p>
+      <p>Please wait a few minutes and try again. This keeps the free service available for everyone.</p>
+    </section>
+
+    <section class="receipt" aria-labelledby="s5">
+      <h2 id="s5">Too long</h2>
+      <p class="item-title">That's more than we can check at once.</p>
+      <p>The limit is 6,000 characters. Paste the part of the post that lists the requirements and pay.</p>
+      <div class="counter"><span></span><span style="color:var(--stamp);font-weight:600">6,412 / 6,000</span></div>
+    </section>
+
+    <section class="receipt" aria-labelledby="s6">
+      <h2 id="s6">Nothing found</h2>
+      <p class="item-title">None of our checks fired.</p>
+      <p>That does not mean the post is safe. Check the employer through official channels.</p>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Tools">
+    <a href="post-check.html">Post Check</a>
+    <a href="fit-check.html">Fit Check</a>
+    <a href="history.html">History</a>
+  </nav>
+</div>
+</body>
+</html>
