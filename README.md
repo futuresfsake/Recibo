@@ -35,7 +35,7 @@ A raw LLM quote is a `RawQuote`. Only the verifier (a fuzzy match against the re
 | Layer | Choice |
 |---|---|
 | Frontend | React 19 + Vite + TypeScript, installable PWA (static build) |
-| API | Node.js 22 + Express 5 + TypeScript, Zod for every schema |
+| API | Node.js 22 + Express 5 + TypeScript, REST over JSON with one error shape ([conventions](docs/ARCHITECTURE.md#api-rest-over-http-json)), Zod for every schema |
 | Core | `@resibo/proof`: framework-free evidence contract, rules, verifier, scorer |
 | LLM | Ollama locally; free hosted OpenAI-compatible chain for the demo |
 | Tests | Vitest + Supertest; test titles carry requirement IDs |

@@ -79,7 +79,16 @@ npm workspaces monorepo. Dependencies point one way: `apps/*` → `packages/proo
 - No server-side persistence in v1. If it is ever added: explicit consent, retention limit, delete path, notice aligned with the Data Privacy Act.
 - Tests and evals use synthetic data only.
 
-## API
+## API (REST over HTTP, JSON)
+
+Conventions, implemented in `apps/api/src/errors.ts` and covered by NFR-04 tests:
+
+- JSON request and response bodies (file upload is the one `multipart/form-data` exception, on `/analyze`). Body limit 256 KB for JSON.
+- Stateless: no sessions, no server-side history. Every request carries all it needs.
+- Status codes: `200` success, `400` malformed or invalid input, `404` unknown route, `413` payload too large, `429` rate limited (M8), `500` unexpected. Dependency outages (LLM down) are **not** errors: the response is `200` with an explicit degraded/unavailable state (principle 4).
+- One error shape everywhere: `{"error": {"code": "not_found", "message": "…"}}`. Messages never echo request text and never expose internals (NFR-10).
+- Every request body is validated with Zod at the route boundary before any logic runs.
+- CORS limited to the configured web origin (`CORS_ORIGIN`).
 
 | Endpoint | Purpose |
 |---|---|

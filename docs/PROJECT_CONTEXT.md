@@ -234,4 +234,4 @@ The authoritative list is `docs/PLAN.md` (M0–M9). Build in that order and don'
 
 ## 14. Out of scope (MVP)
 
-User accounts/auth · fine-tuning models · scraping job sites · auto-writing full resumes · applying to jobs · languages besides English/Taglish job posts.
+User accounts/auth · fine-tuning models · scraping job sites · auto-writing full resumes · applying to jobs · languages besides English/Taglish job posts · OCR for scanned PDFs (clear error instead).

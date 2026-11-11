@@ -76,7 +76,9 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 - **Done when:** works with the LLM switched off, and eval numbers are recorded.
 
 ### M4 — Slice B: Fit Check
-- [ ] Resolve Q-17 (TypeScript libraries for fuzzy match and PDF/DOCX), then parse resume, sections, PH normalization (FR-01, FR-02, FR-04)
+- [ ] Parse resume with the provisional Q-17 libraries (`unpdf`, `mammoth`, own matcher), then sections, sections, PH normalization (FR-01, FR-02, FR-04)
+- [ ] Q-17 follow-ups before the libraries are final: two-column resume, scanned PDF (must return the "can't read this file" error, no OCR), 2-3 anonymized real resumes kept local and gitignored (never committed; record aggregate results only)
+- [ ] FR-07 rules built and tested: number guard (`40%` = `40 percent` = `forty percent`) and exact match for quotes under about 5 words
 - [ ] Extract requirements (FR-03), in-memory retrieval (FR-05), batched judge (FR-06)
 - [ ] Verify citations, downgrade, flag (FR-07, FR-08): strict RED→GREEN, gated review
 - [ ] Score (FR-09), suggestions with verification, separate gap-actions list (FR-10)
@@ -121,4 +123,4 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 
 ## Out of scope (v1)
 
-Accounts, auto-apply, scraping, resume auto-writing, salary data, fine-tuning, languages beyond English/Taglish.
+Accounts, auto-apply, scraping, resume auto-writing, salary data, fine-tuning, languages beyond English/Taglish, OCR for scanned PDFs (they get a clear error instead).

@@ -12,7 +12,6 @@ Status is mutable; resolved items move to Closed and are not edited again. "Bloc
 | Q-06 | Who labels the 30–50 eval pairs; synthetic only? **Proposed:** synthetic resumes written by the owner; job posts collected by hand and anonymized | owner decides | M6 | proposed |
 | Q-07 | Which free hosted LLMs make up the provider chain, and their current limits and terms | fact needed | M8 | open |
 | Q-08 | Rename the GitHub repo `Recibo` to `Resibo`? | owner decides | none | open |
-| Q-09 | Unreadable or partially readable PDF: error or best-effort parse? | owner decides | M4 | open |
 | Q-10 | Is the interview sample (8–10 job seekers, 2–3 recruiters) reachable before M1 ends? Who? | owner | M1 | open |
 | Q-11 | Source and legality of collected job posts: hand-collected, anonymized, no scraping. Any employer-name handling rule? | owner decides | M1 | open |
 | Q-12 | Which official verification channels to link from Post Check (agency names and URLs must be verified current) | fact needed | M3 | open |
@@ -20,9 +19,12 @@ Status is mutable; resolved items move to Closed and are not edited again. "Bloc
 | Q-14 | Timeline: confirm the proposed windows against Queueless and interview dates | owner decides | none | open |
 | Q-15 | Capacity is about 20–30 analyses/day per provider (unmeasured). Add a bring-your-own-free-key mode (key held in the browser, never logged)? | owner decides after measuring tokens in M2 | M8 | open |
 | Q-16 | Fresh-grad statistics conflict between sources (38.2% vs 35.6%); cite only the PSA release. Who confirms the final numbers for the README? | owner | M9 | open |
-| Q-17 | Pick TypeScript libraries to replace the Python ones: fuzzy partial-match for quote verification (e.g. `fastest-levenshtein`, `fuse.js`, or a small custom partial-ratio), PDF text extraction, DOCX text extraction, BM25/embeddings. Must be free and maintained, and handle text vs. scanned PDFs (Q-09). Spike each on synthetic resumes first | fact needed, then owner decides | M4 | open |
+| Q-17 | Pick TypeScript libraries to replace the Python ones: fuzzy partial-match for quote verification (e.g. `fastest-levenshtein`, `fuse.js`, or a small custom partial-ratio), PDF text extraction, DOCX text extraction, BM25/embeddings. Must be free and maintained, and handle text vs. scanned PDFs (Q-09). Spike each on synthetic resumes first. **Spike done 2026-11-11 ([research/Q17_LIBRARY_SPIKE.md](research/Q17_LIBRARY_SPIKE.md)). Recommended: `unpdf` (PDF), `mammoth` (DOCX), own best-window matcher on `fastest-levenshtein` with a number guard and short-quote rule. `fuzzball` and `fuse.js` rejected; BM25 untested.** | owner decides | M4 | provisional: accepted 2026-11-11; follow-ups in docs/research/Q17_LIBRARY_SPIKE.md must pass before M4 closes |
 | Q-18 | Demo hosting: confirm Render free supports the Node 22 runtime, and that the static web build deploys separately (Cloudflare Pages) | fact needed | M8 | open |
 
 ## Closed
 
-_None yet._
+| ID | Question | Resolution | Closed |
+|---|---|---|---|
+| Q-09 | Unreadable or partially readable PDF: error or best-effort parse? | Error. Return a clear "can't read this file" message (NFR-04) and suggest DOCX or pasting text. No OCR: out of scope for this portfolio project | 2026-11-11 |
+| Q-19 | Rename endpoints to resource nouns? | No. Keep `/post-check` and `/analyze`: action endpoints, nothing stored by ID. Revisit if analyses get saved. FR-11 unchanged | 2026-11-11 |

@@ -4,3 +4,5 @@ dist/
 *.tsbuildinfo
 evals/results/*.json
 !evals/results/.gitkeep
+# anonymized real resumes for local spikes only; never commit
+local-data/
