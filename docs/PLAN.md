@@ -90,6 +90,7 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 
 ### M5 — PWA frontend
 - [ ] React + Vite PWA (static build): Post Check page, Fit Check page, results with highlighted resibo and rejected-claim badge (FR-15)
+- [ ] Port `design/prototype/` to React using the same `styles.css` (DECISIONS #33); self-host the two fonts so the PWA works offline and makes no third-party request at runtime
 - [ ] Browser-side history (FR-23), mobile-first at 360 px (NFR-13)
 - **Done when:** both tools usable on a phone-width viewport against the local API.
 
