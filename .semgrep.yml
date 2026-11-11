@@ -19,7 +19,7 @@ rules:
     languages: [typescript, javascript]
     severity: ERROR
     message: Read keys from config/env, never hard-code them.
-    pattern-regex: (api_?key|API_?KEY)\s*[:=]\s*["'][A-Za-z0-9_\-]{16,}["']
+    pattern-regex: (?i)api_?key\s*[:=]\s*["'][A-Za-z0-9_\-]{16,}["']
 
   - id: resibo-no-langchain
     languages: [typescript, javascript]
