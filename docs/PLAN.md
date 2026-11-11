@@ -51,7 +51,7 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 ### M0 — Guards (mostly done)
 - [x] Hooks, audit log, trace script, CI, semgrep, gitleaks config
 - [ ] `ggshield` login, add to pre-commit and CI
-- [ ] Semgrep run in CI
+- [x] Semgrep run in CI (`semgrep` job, pinned image, local rules only, metrics off). Rules checked against planted violations and the repo with the same image; first run on GitHub happens on the next push
 - **Done when:** a fake key commit is blocked locally and in CI.
 
 ### M1 — Data
