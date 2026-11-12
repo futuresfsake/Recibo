@@ -2,8 +2,12 @@ name: ci
 
 on:
   push:
-    branches: [main]
+    branches: [main, staging, dev]
   pull_request:
+
+# least privilege: jobs only read the code unless they ask for more below
+permissions:
+  contents: read
 
 jobs:
   check:
@@ -22,8 +26,21 @@ jobs:
       - run: npm run trace
       - run: npm run check:local-data
 
+  semgrep:
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep:1.183.0
+    steps:
+      - uses: actions/checkout@v4
+      # local rules only; --error fails the job on any finding; no usage metrics sent
+      - run: semgrep scan --config .semgrep.yml --error --metrics=off
+
   secrets:
     runs-on: ubuntu-latest
+    # gitleaks lists the commits of a pull request through the API
+    permissions:
+      contents: read
+      pull-requests: read
     steps:
       - uses: actions/checkout@v4
         with:

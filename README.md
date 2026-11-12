@@ -90,6 +90,7 @@ Useful scripts:
 - [Open questions register](docs/OPEN_QUESTIONS.md)
 - [Plan and milestones](docs/PLAN.md)
 - [Architecture](docs/ARCHITECTURE.md)
+- [App flow](docs/APP_FLOW.md) and the [clickable visual prototype](design/README.md)
 - [Evaluation plan](docs/EVALS.md)
 - [Decisions log](docs/DECISIONS.md)
 

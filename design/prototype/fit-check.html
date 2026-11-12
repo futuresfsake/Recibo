@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fit Check · Resibo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="screen">
+  <header class="masthead"><a class="wordmark" href="index.html">resibo</a></header>
+
+  <main>
+    <h1>Fit Check</h1>
+    <p class="lede">Your resume against a job post. Every rating shows the line from your resume that backs it up.</p>
+
+    <form action="fit-result.html">
+      <div class="field">
+        <span class="eyebrow" id="resume-label" style="display:block;margin:0 0 .4rem">Your resume</span>
+        <div class="file" role="group" aria-labelledby="resume-label">
+          <span>jose-mock-reyes.pdf · 1 page</span>
+          <button class="btn btn--ghost btn--small" type="button">Remove</button>
+        </div>
+        <p class="meta">PDF or DOCX. Or <a href="fit-check.html">paste the text instead</a>.</p>
+      </div>
+
+      <div class="field">
+        <label for="job">Job post</label>
+        <textarea id="job" name="job" rows="8">Junior Web Developer
+Required: React, Node.js and Express, SQL, 2 years of experience.
+Preferred: Python, Java.</textarea>
+        <div class="counter"><span>Sample post, fictional</span><span>111 / 6,000</span></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" type="submit">Check my fit</button>
+      </div>
+    </form>
+
+    <p class="meta">Not saved on our server. Takes about a minute.</p>
+  </main>
+
+  <nav class="tabbar" aria-label="Tools">
+    <a href="post-check.html">Post Check</a>
+    <a href="fit-check.html" aria-current="page">Fit Check</a>
+    <a href="history.html">History</a>
+  </nav>
+</div>
+</body>
+</html>
