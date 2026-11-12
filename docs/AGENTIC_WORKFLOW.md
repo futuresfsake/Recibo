@@ -100,7 +100,8 @@ Rules that make it hold:
 2. Never skip a step upward (no `dev` straight to `main`).
 3. Every hotfix is synced back down to `staging` and `dev`, so nothing regresses.
 
+Enforced on GitHub since 2026-11-12 (DECISIONS #35): `main` and `staging` require a PR with the `check`, `semgrep` and `secrets` jobs passing, with no force pushes and no deletion, and this applies to the owner too. Required approvals are set to zero, because GitHub does not let an author approve their own PR; the review is the fresh-context review from the DoD, noted in the PR. `dev` is not protected.
+
 Not in place yet:
 
-- Branch protection on GitHub is not switched on, and the review count for a single-owner repo is undecided (Q-21). Until then rule 1 is kept by habit, not enforced.
 - The three environments do not exist. Deploy is M8; until then `dev`, `staging` and `main` differ only in what has been promoted.
