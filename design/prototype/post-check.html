@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Post Check · Resibo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="screen">
+  <header class="masthead"><a class="wordmark" href="index.html">resibo</a></header>
+
+  <main>
+    <h1>Post Check</h1>
+    <p class="lede">Paste a job post. We show the red flags we find, and the exact line behind each one.</p>
+
+    <form action="post-result.html">
+      <div class="field">
+        <label for="post">Job post</label>
+        <textarea id="post" name="post" rows="9">URGENT HIRING! Data Encoder (WFH). No experience needed, pay P800 per day.
+To secure your slot, pay the P500 registration fee via GCash.
+Message us on Telegram only. No interview needed. Hired agad!</textarea>
+        <div class="counter"><span>Sample post, fictional</span><span>198 / 6,000</span></div>
+      </div>
+      <div class="actions">
+        <button class="btn" type="submit">Check this post</button>
+      </div>
+    </form>
+
+    <p class="note"><strong>Signals, not verdicts.</strong> We point at lines worth a second look. We never say a post is a scam.</p>
+    <p class="meta">Not saved on our server.</p>
+  </main>
+
+  <nav class="tabbar" aria-label="Tools">
+    <a href="post-check.html" aria-current="page">Post Check</a>
+    <a href="fit-check.html">Fit Check</a>
+    <a href="history.html">History</a>
+  </nav>
+</div>
+</body>
+</html>

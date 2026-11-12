@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fit Check result · Resibo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="screen">
+  <header class="masthead"><a class="wordmark" href="index.html">resibo</a></header>
+
+  <main>
+    <p class="eyebrow">Junior Web Developer</p>
+
+    <section class="receipt" aria-labelledby="score-label">
+      <p class="serial">OR No. 004218</p>
+      <h2 id="score-label">Fit score</h2>
+      <p class="score"><b>68</b><span>/ 100</span></p>
+      <p class="meta">Worked out by code from the ratings below. The AI does not pick the number. Required counts 3&times;, preferred 1&times;.</p>
+
+      <hr class="rule">
+
+      <h2>Strong · 3</h2>
+      <div class="item">
+        <span class="mark mark--strong" aria-hidden="true"></span>
+        <div>
+          <p class="item-title">React <span class="badge">REQUIRED</span></p>
+          <p class="proof"><span class="quote">Built an inventory dashboard using React and Node.js</span></p>
+          <p class="verified"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7.5 5.5 11 12 3" fill="none" stroke="currentColor" stroke-width="2"/></svg> Verified in your resume</p>
+        </div>
+      </div>
+      <div class="item">
+        <span class="mark mark--strong" aria-hidden="true"></span>
+        <div>
+          <p class="item-title">Node.js and Express <span class="badge">REQUIRED</span></p>
+          <p class="proof"><span class="quote">Wrote REST endpoints with Express and added unit tests with Vitest</span></p>
+          <p class="verified"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7.5 5.5 11 12 3" fill="none" stroke="currentColor" stroke-width="2"/></svg> Verified in your resume</p>
+        </div>
+      </div>
+      <div class="item">
+        <span class="mark mark--strong" aria-hidden="true"></span>
+        <div>
+          <p class="item-title">SQL <span class="badge">REQUIRED</span></p>
+          <p class="proof"><span class="quote">PostgreSQL, SQL</span></p>
+          <p class="verified"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7.5 5.5 11 12 3" fill="none" stroke="currentColor" stroke-width="2"/></svg> Verified in your resume</p>
+        </div>
+      </div>
+
+      <h2>Partial · 1</h2>
+      <div class="item">
+        <span class="mark mark--partial" aria-hidden="true"></span>
+        <div>
+          <p class="item-title">Java <span class="badge">PREFERRED</span></p>
+          <p class="proof"><span class="quote">Object-Oriented Programming (Java)</span></p>
+          <p class="item-sub">Coursework only. No project or job shows Java.</p>
+          <p class="verified"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7.5 5.5 11 12 3" fill="none" stroke="currentColor" stroke-width="2"/></svg> Verified in your resume</p>
+        </div>
+      </div>
+
+      <h2>Gap · 2</h2>
+      <div class="item">
+        <span class="mark mark--gap" aria-hidden="true"></span>
+        <div>
+          <p class="item-title">2 years of experience <span class="badge">REQUIRED</span></p>
+          <p class="item-sub">No line on your resume shows 2 years. Closest: OJT Web Developer, 320 hours.</p>
+        </div>
+      </div>
+      <div class="item">
+        <span class="mark mark--reject" aria-hidden="true"></span>
+        <div>
+          <p class="item-title">Python <span class="badge">PREFERRED</span></p>
+          <p class="proof"><span class="struck">Developed Python microservices</span></p>
+          <p class="rejected">AI claim rejected: no proof found</p>
+          <p class="item-sub">That line is not on your resume, so Resibo threw the claim out and counted this as a gap.</p>
+        </div>
+      </div>
+
+      <hr class="rule">
+      <p class="stamp">3 verified &middot; 1 rejected</p>
+    </section>
+
+    <details>
+      <summary>Resume notes · 2</summary>
+      <ul>
+        <li>Age is on your resume. Many employers do not need it. Your call.</li>
+        <li>Civil status is on your resume. It does not change how well you fit this job.</li>
+      </ul>
+    </details>
+
+    <div class="actions">
+      <a class="btn" href="next-steps.html">Next steps</a>
+      <a class="btn btn--ghost" href="fit-check.html">Check another</a>
+    </div>
+  </main>
+
+  <nav class="tabbar" aria-label="Tools">
+    <a href="post-check.html">Post Check</a>
+    <a href="fit-check.html" aria-current="page">Fit Check</a>
+    <a href="history.html">History</a>
+  </nav>
+</div>
+</body>
+</html>
