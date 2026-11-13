@@ -6,7 +6,7 @@
   <title>Resibo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,15 +14,18 @@
   <header class="masthead">
     <a class="wordmark" href="index.html">resibo</a>
     <span class="tag">May resibo ka?</span>
-  </header>
+  <nav class="topnav" aria-label="Tools"><a href="post-check.html">Post Check</a><a href="fit-check.html">Fit Check</a><a href="history.html">History</a></nav></header>
 
-  <main>
+  <main class="home">
     <h1>Every claim comes with proof.</h1>
     <p class="lede">Check a job post for red flags. See how your resume fits, with the exact lines that prove it.</p>
+    <div class="actions">
+      <a class="btn" href="post-check.html">Check a job post</a>
+      <a class="btn btn--ghost" href="fit-check.html">Check my fit</a>
+    </div>
 
     <section class="receipt" aria-labelledby="tools">
-      <p class="serial">OR No. 000001</p>
-      <h2 id="tools">What do you need?</h2>
+      <h2 id="tools">Tools</h2>
       <a class="toolrow" href="post-check.html">
         <span class="no">01</span>
         <span><span class="name">Post Check</span><span class="desc">Red flags in a job post, each with the quote.</span></span>
