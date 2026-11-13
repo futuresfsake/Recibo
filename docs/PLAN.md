@@ -70,9 +70,10 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 - **Done when:** a structured call succeeds locally and falls back to a second provider when the first is forced to fail (test).
 
 ### M3 — Slice A: Post Check
-- [ ] Rule engine with signals + exact quote spans (FR-17, FR-18)
+- [x] Rule engine with signals + exact quote spans (FR-17, FR-18): `packages/proof/src/post-check.ts`, 7 text rules (S01, S02, S03, S05, S06, S08, S09). S04, S07, S10 need employer data, not text rules (Q-22)
 - [ ] Optional LLM plain-language explanation, constrained to rule-produced signals (FR-19)
-- [ ] `POST /post-check`; eval on the post corpus: recall on scam-like posts, false-positive rate on legit posts (NFR-15)
+- [x] `POST /post-check` (`apps/api/src/routes/post-check.ts`), works with DB and LLM down
+- [ ] Eval on the post corpus: recall on scam-like posts, false-positive rate on legit posts (NFR-15). Blocked on the owner collecting posts by hand (Q-11 approved, DECISIONS #46)
 - **Done when:** works with the LLM switched off, and eval numbers are recorded.
 
 ### M4 — Slice B: Fit Check
