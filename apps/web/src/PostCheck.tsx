@@ -1,14 +1,17 @@
+import { checkPost, MAX_POST_CHARS } from "@resibo/proof";
 import { useRef, useState } from "react";
 import { toSegments, type ApiSignal } from "./segments";
 
 const API = import.meta.env.VITE_API_URL ?? "/api";
-const MAX_CHARS = 6000; // mirrors MAX_POST_CHARS in @resibo/proof (DECISIONS #43)
+const MAX_CHARS = MAX_POST_CHARS; // DECISIONS #43
 
 interface Result {
   /** The exact text that was checked, so offsets line up even if the box is edited later. */
   checked: string;
   signals: ApiSignal[];
   rulesRun: number;
+  /** Where the check ran. "browser" means the server was unreachable (DECISIONS #48). */
+  ranIn: "server" | "browser";
 }
 
 type State =
@@ -21,7 +24,18 @@ const SAMPLE = `URGENT HIRING! Data Encoder (WFH). No experience needed, pay P80
 To secure your slot, pay the P500 registration fee via GCash.
 Message us on Telegram only. No interview needed. Hired agad!`;
 
-async function runCheck(post: string, signal: AbortSignal): Promise<Result> {
+/** Same rules, run locally. Used when no server is reachable, so the public preview works. */
+function runLocal(post: string): Result {
+  const { signals, rulesRun } = checkPost(post);
+  return {
+    checked: post,
+    signals: signals.map((s) => ({ rule_id: s.ruleId, label: s.label, quote: s.quote, start: s.start, end: s.end })),
+    rulesRun,
+    ranIn: "browser",
+  };
+}
+
+export async function runCheck(post: string, signal: AbortSignal): Promise<Result> {
   let res: Response;
   try {
     res = await fetch(`${API}/post-check`, {
@@ -31,20 +45,21 @@ async function runCheck(post: string, signal: AbortSignal): Promise<Result> {
       signal,
     });
   } catch {
-    throw new Error(
-      "Can't reach the server. On the public preview the server is not deployed yet. Run the project locally to try it.",
-    );
+    if (signal.aborted) throw new Error("Cancelled.");
+    return runLocal(post);
   }
   const body: unknown = await res.json().catch(() => null);
   if (!res.ok) {
+    // A host that answers but is not our API (for example a static 404 page) counts as "no server".
     const message =
       typeof body === "object" && body !== null && "error" in body
         ? (body as { error?: { message?: string } }).error?.message
         : undefined;
+    if (message === undefined && res.status >= 400) return runLocal(post);
     throw new Error(message ?? "The check failed. Try again.");
   }
   const ok = body as { signals: ApiSignal[]; rules_run: number };
-  return { checked: post, signals: ok.signals, rulesRun: ok.rules_run };
+  return { checked: post, signals: ok.signals, rulesRun: ok.rules_run, ranIn: "server" };
 }
 
 export function PostCheck() {
@@ -104,7 +119,7 @@ export function PostCheck() {
               {state.kind === "loading" ? "Checking" : "Check this post"}
             </button>
           </div>
-          <p className="meta">Checked on the server and not saved. Nothing is stored or logged.</p>
+          <p className="meta">Nothing is saved. If no server is reachable, the check runs in your browser and the text never leaves it.</p>
         </form>
       </section>
 
@@ -133,7 +148,7 @@ export function PostCheck() {
 }
 
 function Results({ result }: { result: Result }) {
-  const { signals, checked, rulesRun } = result;
+  const { signals, checked, rulesRun, ranIn } = result;
   const segments = toSegments(checked, signals);
   return (
     <div>
@@ -142,6 +157,12 @@ function Results({ result }: { result: Result }) {
           ? "No signals found"
           : `${signals.length} ${signals.length === 1 ? "signal" : "signals"} found`}
       </h2>
+      {ranIn === "browser" && (
+        <p className="note">
+          <strong>Ran in your browser.</strong> No server is connected, so this used the same rules locally. Nothing
+          was sent anywhere.
+        </p>
+      )}
       {signals.length === 0 ? (
         <p className="meta">
           None of the {rulesRun} checks fired. That does not mean the post is safe: check the employer through

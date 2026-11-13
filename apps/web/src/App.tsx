@@ -11,7 +11,7 @@ const STATUS_TEXT: Record<ApiState, string> = {
   checking: "Checking the server",
   ok: "Server online",
   degraded: "Server online, AI explanations off",
-  offline: "Server not deployed yet",
+  offline: "No server: checks run in your browser",
 };
 
 const NAV: ReadonlyArray<{ route: Route; label: string }> = [
