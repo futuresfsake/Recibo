@@ -1,4 +1,4 @@
-import { checkPost } from "@resibo/proof";
+import { checkPost, MAX_POST_CHARS } from "@resibo/proof";
 import { Router } from "express";
 import { z } from "zod";
 import { HttpError } from "../errors.js";
@@ -20,6 +20,13 @@ export function postCheckRouter(): Router {
     const post = parsed.data.post;
     if (post.trim().length === 0) {
       throw new HttpError(400, "empty_post", "Paste the job post text to check.");
+    }
+    if (post.length > MAX_POST_CHARS) {
+      throw new HttpError(
+        413,
+        "post_too_long",
+        `That is more than we can check at once. The limit is ${MAX_POST_CHARS.toLocaleString("en-US")} characters. Paste the part that lists the requirements and pay.`,
+      );
     }
     const { signals, rulesRun } = checkPost(post);
     res.json({

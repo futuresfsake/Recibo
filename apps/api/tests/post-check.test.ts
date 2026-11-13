@@ -45,6 +45,15 @@ describe("POST /post-check", () => {
     expect(res.body.error.code).toBe("invalid_request");
   });
 
+  it("NFR-04 a post over the character limit is a 413 with the limit in the message", async () => {
+    const res = await request(app).post("/post-check").send({ post: "a".repeat(6001) });
+    expect(res.status).toBe(413);
+    expect(res.body.error.code).toBe("post_too_long");
+    expect(res.body.error.message).toContain("6,000");
+    const ok = await request(app).post("/post-check").send({ post: "a".repeat(6000) });
+    expect(ok.status).toBe(200);
+  });
+
   it("NFR-04 an oversized body is a 413", async () => {
     const res = await request(app).post("/post-check").send({ post: "a".repeat(300_000) });
     expect(res.status).toBe(413);

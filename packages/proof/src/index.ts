@@ -45,5 +45,5 @@ export interface Signal {
   readonly quote: string;
 }
 
-export { checkPost } from "./post-check.js";
+export { checkPost, MAX_POST_CHARS } from "./post-check.js";
 export type { PostCheckResult, PostSignal } from "./post-check.js";

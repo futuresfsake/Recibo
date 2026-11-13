@@ -114,6 +114,9 @@ const NEGATION_AFTER = /^\s*(?:is\s+|are\s+)?(?:not\s+required|free|waived|libre
 
 const MAX_PER_RULE = 3;
 
+/** Longest post Post Check accepts, in characters (DECISIONS #43). Also bounds regex work. */
+export const MAX_POST_CHARS = 6000;
+
 export interface PostSignal extends Signal {
   /** Offset of the quote in the post text, in UTF-16 code units. */
   readonly start: number;
