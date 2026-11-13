@@ -1,34 +1,28 @@
-:root {
-  font-family: system-ui, sans-serif;
-  color-scheme: light dark;
-}
-body {
-  margin: 0;
-}
-main {
-  max-width: 40rem;
-  margin: 0 auto;
-  padding: 1.5rem 1rem;
-}
-.tagline {
-  opacity: 0.75;
-}
-.tools {
-  padding-left: 1.1rem;
-  line-height: 1.5;
-}
+/* The visual system lives in design/prototype/styles.css and is imported in main.tsx
+   (DECISIONS #33). Only app-specific pieces go here. */
+
+.toolrow { grid-template-columns: 2.25rem 1fr; cursor: default; }
+.toolrow:hover .name { text-decoration: none; }
+
 .status {
-  display: inline-block;
-  padding: 0.2rem 0.6rem;
-  border-radius: 0.4rem;
-  border: 1px solid currentColor;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0 0;
+  font: 500 0.8125rem var(--font-mono);
+  color: var(--muted);
 }
-.status-ok {
-  color: #1a7f37;
+.status::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
 }
-.status-degraded {
-  color: #9a6700;
-}
-.status-offline {
-  color: #cf222e;
+.status-ok::before { background: var(--pen); border-color: var(--pen); }
+.status-degraded::before { background: transparent; border-color: var(--pen); }
+.status-offline::before { background: var(--stamp); border-color: var(--stamp); }
+
+@media (min-width: 48rem) {
+  main.home .status { grid-column: 1; }
 }
