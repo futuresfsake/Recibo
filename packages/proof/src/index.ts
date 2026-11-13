@@ -44,3 +44,6 @@ export interface Signal {
   /** Exact quote from the job post that triggered the rule. */
   readonly quote: string;
 }
+
+export { checkPost, MAX_POST_CHARS } from "./post-check.js";
+export type { PostCheckResult, PostSignal } from "./post-check.js";
