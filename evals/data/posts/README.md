@@ -1,6 +1,6 @@
 # Job-post corpus (Post Check)
 
-**Status: proposed rules for Q-11. Nothing is collected until the owner approves this file.**
+**Status: approved 2026-11-13 (Q-11 closed, DECISIONS #46). The owner collects posts by hand; nothing is collected yet.**
 
 Goal: 30+ posts to measure Post Check recall on scam-like posts and the false-positive rate on legit posts (NFR-15). Posts are text only.
 
