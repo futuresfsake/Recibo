@@ -12,7 +12,7 @@ Status is mutable; resolved items move to Closed and are not edited again. "Bloc
 | Q-06 | Who labels the 30–50 eval pairs; synthetic only? **Proposed:** synthetic resumes written by the owner; job posts collected by hand and anonymized | owner decides | M6 | proposed |
 | Q-07 | Which free hosted LLMs make up the provider chain, and their current limits and terms | fact needed | M8 | open |
 | Q-08 | Rename the GitHub repo `Recibo` to `Resibo`? | owner decides | none | open |
-| Q-11 | Source and legality of collected job posts: hand-collected, anonymized, no scraping. Any employer-name handling rule? | owner decides | M1 | open |
+| Q-11 | Source and legality of collected job posts: hand-collected, anonymized, no scraping. Any employer-name handling rule? | owner decides | M1 | proposed: rules drafted in `evals/data/posts/README.md`, owner approval pending |
 | Q-12 | Which official verification channels to link from Post Check (agency names and URLs must be verified current) | fact needed | M3 | open |
 | Q-13 | Backend host for the demo (cold starts vs. memory limits); verify at M8 | fact needed | M8 | open |
 | Q-14 | Timeline: confirm the proposed windows against Queueless and interview dates | owner decides | none | open |
