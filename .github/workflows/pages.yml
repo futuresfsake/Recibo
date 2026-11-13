@@ -27,6 +27,8 @@ jobs:
       - run: npm run build -w @resibo/web
         env:
           VITE_BASE: /Recibo/
+      # Static design preview of the screens, served beside the app (DECISIONS #39)
+      - run: mkdir -p apps/web/dist/prototype && cp design/prototype/*.html design/prototype/styles.css apps/web/dist/prototype/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: apps/web/dist

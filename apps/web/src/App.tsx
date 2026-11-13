@@ -33,6 +33,11 @@ export function App() {
           <strong>Next Steps</strong> Reframing tips from verified experience, plus honest gaps.
         </li>
       </ul>
+      <p className="preview">
+        The tools are not built yet.{" "}
+        <a href={`${import.meta.env.BASE_URL}prototype/index.html`}>See the design preview</a> (static
+        mock-up, sample data only, nothing is analysed).
+      </p>
       <p className={`status status-${api}`} role="status">
         API: {api}
       </p>
