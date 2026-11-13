@@ -6,7 +6,7 @@
   <title>Style guide · Resibo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,30 +14,26 @@
   <header class="masthead"><a class="wordmark" href="index.html">resibo</a><span class="tag">style guide</span><nav class="topnav" aria-label="Tools"><a href="post-check.html">Post Check</a><a href="fit-check.html">Fit Check</a><a href="history.html">History</a></nav></header>
 
   <main>
-    <h1>The receipt system</h1>
-    <p class="lede">Resibo means receipt. The interface is built like one: paper, ink, a perforated edge, a serial number, and stamps. The look comes from the idea, so it does not need decoration.</p>
+    <h1>Style guide</h1>
+    <p class="lede">A clean, light interface with one accent. The product's rule (every claim shows its quote) is carried by one component, the proof callout, so the rest of the interface stays quiet.</p>
 
     <h2>Color</h2>
     <div class="guide-grid">
-      <div class="swatch"><i style="background:#f3eee2"></i><p><b>Paper</b> #F3EEE2<br>App background. Ink on paper 15.1:1</p></div>
-      <div class="swatch"><i style="background:#fbf9f2"></i><p><b>Sheet</b> #FBF9F2<br>Receipts, inputs. Ink on sheet 16.6:1</p></div>
-      <div class="swatch"><i style="background:#1c1915"></i><p><b>Ink</b> #1C1915<br>Text, borders, primary buttons</p></div>
-      <div class="swatch"><i style="background:#655e52"></i><p><b>Muted</b> #655E52<br>Secondary text. 5.5:1 on paper, 6.1:1 on sheet</p></div>
-      <div class="swatch"><i style="background:#1d3f8c"></i><p><b>Pen blue</b> #1D3F8C<br>Verified, links, focus. 9.3:1 on sheet</p></div>
-      <div class="swatch"><i style="background:#c9dafa"></i><p><b>Marker</b> #C9DAFA<br>Behind a proof quote. Ink on marker 12.4:1</p></div>
-      <div class="swatch"><i style="background:#b3261e"></i><p><b>Stamp red</b> #B3261E<br>Rejections, serial numbers. 6.2:1 on sheet</p></div>
-      <div class="swatch"><i style="background:#e7e0cf"></i><p><b>Desk</b> #E7E0CF<br>Behind the phone column. Dividers use #CFC6B2 (decoration only)</p></div>
+      <div class="swatch"><i style="background:#f6f7f9"></i><p><b>Page</b> #F6F7F9<br>Background behind cards</p></div>
+      <div class="swatch"><i style="background:#ffffff"></i><p><b>Surface</b> #FFFFFF<br>Cards, header, inputs</p></div>
+      <div class="swatch"><i style="background:#101828"></i><p><b>Text</b> #101828<br>17.7:1 on white</p></div>
+      <div class="swatch"><i style="background:#5b6577"></i><p><b>Muted</b> #5B6577<br>Secondary text. 5.9:1 on white</p></div>
+      <div class="swatch"><i style="background:#4338ca"></i><p><b>Accent</b> #4338CA<br>Buttons, links, focus, proof. 8.3:1 on white</p></div>
+      <div class="swatch"><i style="background:#067647"></i><p><b>Verified</b> #067647<br>5.9:1 on white</p></div>
+      <div class="swatch"><i style="background:#b42318"></i><p><b>Rejected</b> #B42318<br>6.5:1 on white</p></div>
+      <div class="swatch"><i style="background:#93370d"></i><p><b>Signal / partial</b> #93370D<br>7.8:1 on white</p></div>
     </div>
 
     <h2>Type</h2>
     <div class="guide-grid">
       <div>
-        <p class="specimen-ui">Archivo 800</p>
-        <p>Headings and words. Tight tracking on large sizes. Body is Archivo 400 at 16px.</p>
-      </div>
-      <div>
-        <p class="specimen-mono">IBM Plex Mono 500</p>
-        <p class="specimen-mono">Quotes, scores, serials, labels and counters. Never below 12px.</p>
+        <p class="specimen-ui">Inter 700</p>
+        <p>Headings, tight tracking at large sizes. Body is Inter 400 at 16px. Scores use tabular figures.</p>
       </div>
     </div>
 
@@ -51,37 +47,29 @@
         <p class="rejected">AI claim rejected: no proof found</p>
       </div>
       <div>
-        <p class="eyebrow">Rating marks (shape and label, never color alone)</p>
-        <p><span class="mark mark--strong"></span> Strong &nbsp; <span class="mark mark--partial"></span> Partial &nbsp; <span class="mark mark--gap"></span> Gap &nbsp; <span class="mark mark--reject"></span> Rejected</p>
-        <p class="eyebrow">Stamps</p>
+        <p class="eyebrow">Rating marks (shape and glyph, never color alone)</p>
+        <p><span class="mark mark--strong"></span> Strong &nbsp; <span class="mark mark--partial"></span> Partial &nbsp; <span class="mark mark--gap"></span> Gap &nbsp; <span class="mark mark--reject"></span> Rejected &nbsp; <span class="mark mark--signal"></span> Signal</p>
+        <p class="eyebrow">Chips</p>
         <div class="row"><span class="stamp">Verified</span><span class="stamp stamp--reject">No proof</span><span class="stamp stamp--ink">Not a verdict</span></div>
       </div>
       <div>
-        <p class="eyebrow">Buttons (48px tall)</p>
+        <p class="eyebrow">Buttons (44px tall)</p>
         <div class="actions" style="margin-top:0"><button class="btn" type="button">Primary</button><button class="btn btn--ghost" type="button">Secondary</button><button class="btn btn--danger" type="button">Destructive</button></div>
       </div>
       <div>
-        <p class="eyebrow">Serial and score</p>
-        <p class="serial">OR No. 004218</p>
+        <p class="eyebrow">Score</p>
         <p class="score"><b>68</b><span>/ 100</span></p>
+        <div class="meter" role="img" aria-label="68 out of 100"><i style="width:68%"></i></div>
       </div>
     </div>
 
     <h2>Rules this system follows</h2>
     <ul class="avoid">
       <li>Every claim sits next to its quote. A claim with no verified quote shows as a rejected line, not as a claim.</li>
-      <li>Meaning is never carried by color alone: marks have shapes and labels.</li>
+      <li>Meaning is never carried by color alone: marks have shapes and glyphs, results have words.</li>
       <li>Touch targets are at least 44px. Text is at least 12px. Layout holds at 360px.</li>
-      <li>One accent per job: blue means proof, red means rejected or a serial. Nothing else is colored.</li>
-      <li>Rounded corners are 2px. The receipt edge is the only decoration.</li>
-    </ul>
-
-    <h2>What it avoids on purpose</h2>
-    <ul class="avoid">
-      <li>Gradient washes, glass panels, glowing shadows, purple-to-blue anything.</li>
-      <li>Grids of identical rounded cards with an icon in a circle.</li>
-      <li>Emoji as icons, sparkle marks, and "AI" badges.</li>
-      <li>Stock hero copy. Every line of text says something specific to this product.</li>
+      <li>One accent. Green means verified, red means rejected, amber means a signal or partial match. Nothing else is colored.</li>
+      <li>Hairline borders and one soft shadow. No gradients, glass or glow.</li>
     </ul>
   </main>
 </div>

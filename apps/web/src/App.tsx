@@ -40,10 +40,14 @@ export function App() {
         <p className="lede">
           Check a job post for red flags. See how your resume fits, with the exact lines that prove it.
         </p>
+        <div className="actions">
+          <a className="btn" href={`${PREVIEW}index.html`}>
+            See the design preview
+          </a>
+        </div>
 
         <section className="receipt" aria-labelledby="tools">
-          <p className="serial">OR No. 000001</p>
-          <h2 id="tools">Three tools</h2>
+          <h2 id="tools">Tools</h2>
           <div className="toolrow">
             <span className="no">01</span>
             <span>
@@ -65,18 +69,11 @@ export function App() {
               <span className="desc">Reframing tips from verified experience, plus honest gaps.</span>
             </span>
           </div>
-          <hr className="rule" />
-          <p className="meta">Not built yet. Coming one tool at a time.</p>
-          <div className="actions">
-            <a className="btn" href={`${PREVIEW}index.html`}>
-              See the design preview
-            </a>
-          </div>
         </section>
 
         <p className="meta">
-          The preview is a mock-up with sample data; nothing is analysed. Your resume and job posts will never be
-          saved on a server.
+          Design prototype: the tools are being built, starting with Post Check. The preview uses sample data and
+          nothing is analysed. Your resume and job posts will never be saved on a server.
         </p>
         <p className={`status status-${api}`} role="status">
           {STATUS_TEXT[api]}
