@@ -1,0 +1,47 @@
+name: pages
+
+# Frontend preview only. The API is not deployed (DECISIONS #38).
+# Deploys from main, so the live site always equals main (DECISIONS #34).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build -w @resibo/web
+        env:
+          VITE_BASE: /Recibo/
+      # Static design preview of the screens, served beside the app (DECISIONS #39)
+      - run: mkdir -p apps/web/dist/prototype && cp design/prototype/*.html design/prototype/styles.css apps/web/dist/prototype/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/web/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
