@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 
 const API = import.meta.env.VITE_API_URL ?? "/api";
+const PREVIEW = `${import.meta.env.BASE_URL}prototype/`;
 
 type ApiState = "checking" | "ok" | "degraded" | "offline";
+
+const STATUS_TEXT: Record<ApiState, string> = {
+  checking: "Checking the server",
+  ok: "Server online",
+  degraded: "Server online, AI explanations off",
+  offline: "Server not deployed yet",
+};
 
 export function App() {
   const [api, setApi] = useState<ApiState>("checking");
@@ -19,23 +27,58 @@ export function App() {
   }, []);
 
   return (
-    <main>
-      <h1>Resibo</h1>
-      <p className="tagline">May resibo ka? Every match comes with proof.</p>
-      <ul className="tools">
-        <li>
-          <strong>Post Check</strong> Red-flag signals in a job post, each with the exact quote.
-        </li>
-        <li>
-          <strong>Fit Check</strong> Your resume against a job post. Every rating cites a verified quote.
-        </li>
-        <li>
-          <strong>Next Steps</strong> Reframing tips from verified experience, plus honest gaps.
-        </li>
-      </ul>
-      <p className={`status status-${api}`} role="status">
-        API: {api}
-      </p>
-    </main>
+    <div className="screen">
+      <header className="masthead">
+        <a className="wordmark" href={import.meta.env.BASE_URL}>
+          resibo
+        </a>
+        <span className="tag">May resibo ka?</span>
+      </header>
+
+      <main className="home">
+        <h1>Every claim comes with proof.</h1>
+        <p className="lede">
+          Check a job post for red flags. See how your resume fits, with the exact lines that prove it.
+        </p>
+        <div className="actions">
+          <a className="btn" href={`${PREVIEW}index.html`}>
+            See the design preview
+          </a>
+        </div>
+
+        <section className="receipt" aria-labelledby="tools">
+          <h2 id="tools">Tools</h2>
+          <div className="toolrow">
+            <span className="no">01</span>
+            <span>
+              <span className="name">Post Check</span>
+              <span className="desc">Red flags in a job post, each with the exact quote.</span>
+            </span>
+          </div>
+          <div className="toolrow">
+            <span className="no">02</span>
+            <span>
+              <span className="name">Fit Check</span>
+              <span className="desc">Your resume against a job post. Every rating cites a verified quote.</span>
+            </span>
+          </div>
+          <div className="toolrow">
+            <span className="no">03</span>
+            <span>
+              <span className="name">Next Steps</span>
+              <span className="desc">Reframing tips from verified experience, plus honest gaps.</span>
+            </span>
+          </div>
+        </section>
+
+        <p className="meta">
+          Design prototype: the tools are being built, starting with Post Check. The preview uses sample data and
+          nothing is analysed. Your resume and job posts will never be saved on a server.
+        </p>
+        <p className={`status status-${api}`} role="status">
+          {STATUS_TEXT[api]}
+        </p>
+      </main>
+    </div>
   );
 }
