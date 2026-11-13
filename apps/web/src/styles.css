@@ -1,13 +1,70 @@
 /* The visual system lives in design/prototype/styles.css and is imported in main.tsx
-   (DECISIONS #33, #41). Only app-specific pieces go here. */
+   (DECISIONS #33, #41, #47). Only app-specific pieces go here. */
 
-.toolrow { grid-template-columns: 2rem 1fr; cursor: default; }
+.tool-page { max-width: 64rem; }
+.narrow { max-width: 36rem; }
 
+.tool { display: grid; gap: 2rem; align-items: start; }
+.tool h1 { margin-top: 0; }
+.tool .lede { max-width: 34rem; }
+
+.linklike {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: 500 0.8125rem var(--font-ui);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  min-height: 2rem;
+}
+.counter .over { color: var(--bad); font-weight: 600; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+
+.out { min-height: 8rem; }
+.placeholder {
+  padding: 1.25rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  color: var(--muted);
+}
+.placeholder h2 { margin-top: 0; color: var(--text); }
+.placeholder p { margin: 0; }
+
+.count { margin: 0; font: 700 1.5rem/1.2 var(--font-ui); letter-spacing: -0.02em; }
+.sub { margin: 1.5rem 0 0.5rem; font: 600 0.8125rem var(--font-ui); color: var(--muted); letter-spacing: 0.02em; }
+
+.annotated {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font: 400 0.9375rem/1.75 var(--font-ui);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.annotated mark {
+  padding: 0.05em 0.15em;
+  border-radius: 3px;
+  background: var(--mark);
+  color: var(--text);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.signals { margin: 0; padding: 0; list-style: none; }
+.signals li { padding: 0.875rem 0; border-top: 1px solid var(--border); }
+.signals li:first-child { border-top: 0; padding-top: 0.25rem; }
+
+.foot { padding: 1.5rem 1rem 2rem; border-top: 1px solid var(--border); background: var(--surface); }
+.foot .meta { margin: 0.25rem 0 0; }
 .status {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 0.5rem 0 0;
+  margin: 0;
   font: 500 0.8125rem var(--font-ui);
   color: var(--muted);
 }
@@ -21,3 +78,12 @@
 .status-ok::before { background: var(--ok); border-color: var(--ok); }
 .status-degraded::before { background: transparent; border-color: var(--warn); }
 .status-offline::before { background: var(--bad); border-color: var(--bad); }
+
+@media (min-width: 60rem) {
+  .tool { grid-template-columns: minmax(0, 26rem) minmax(0, 1fr); gap: 3rem; }
+  .tool > section:first-child { position: sticky; top: 5rem; }
+}
+@media (min-width: 48rem) {
+  .foot { padding-inline: max(1.5rem, calc((100% - 64rem) / 2 + 1.5rem)); display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+  .foot .meta { margin: 0; }
+}

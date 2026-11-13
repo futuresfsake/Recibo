@@ -1,7 +1,7 @@
 /*
   Resibo visual system: clean, light, one accent.
-  Neutral surfaces, an indigo accent for actions and proof, green for verified,
-  red for rejected. Inter for everything; tabular numbers for scores.
+  Neutral surfaces, near-black ink for actions, a highlighter yellow for quoted
+  lines, green for verified, red for rejected. Inter for everything; tabular numbers for scores.
   Tokens first; components below. The React app imports this file (docs/APP_FLOW.md).
   Class names are kept from the first prototype so pages and app share one sheet.
 */
@@ -13,16 +13,18 @@
   --border-strong: #c9ced8;
   --text: #101828;      /* 17.7:1 on white */
   --muted: #5b6577;     /* 5.9:1 on white */
-  --accent: #4338ca;    /* actions, links, focus. 8.3:1 on white */
-  --accent-hover: #3730a3;
-  --accent-soft: #eef0ff;
+  --accent: #16181d;    /* actions, links, focus: near-black ink. 17:1 on white */
+  --accent-hover: #3a3f4a;
+  --accent-soft: #eceef2;
   --ok: #067647;        /* verified. 5.9:1 on white */
   --ok-soft: #e8f7ef;
   --bad: #b42318;       /* rejected. 6.5:1 on white */
   --bad-soft: #fdeceb;
   --warn: #93370d;      /* partial / signal. 7.8:1 on white */
   --warn-soft: #fff4e0;
-  --quote-bg: #f1f3ff;
+  --quote-bg: #fff7d6;   /* highlighter yellow behind a quoted line */
+  --mark: #ffe58a;      /* highlighter in the annotated post. ink on mark 14:1 */
+  --quote-edge: #d4a72c;
 
   --radius: 12px;
   --radius-sm: 8px;
@@ -176,7 +178,7 @@ code { font: 500 0.875em var(--font-mono); background: var(--bg); padding: 0.1em
 .proof {
   margin: 0.625rem 0 0;
   padding: 0.5rem 0.75rem;
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--quote-edge);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   background: var(--quote-bg);
   font: 400 0.875rem/1.6 var(--font-ui);
@@ -258,9 +260,9 @@ textarea:hover { border-color: var(--muted); }
 .note {
   margin: 1rem 0;
   padding: 0.75rem 0.875rem;
-  border: 1px solid #c7cbf5;
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: var(--accent-soft);
+  background: var(--surface);
   font: 400 0.875rem/1.5 var(--font-ui);
 }
 .note strong { font-weight: 600; }
