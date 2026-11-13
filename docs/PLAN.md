@@ -64,7 +64,7 @@ The Queueless MVP is due 2026-11-14 with interviews 2026-12-01 to 12-07, so Resi
 
 ### M2 — Foundation
 - [x] Express skeleton, `/health` (FR-13), React shell, `@resibo/proof` types
-- [ ] `LLMClient` interface, Ollama client, OpenAI-compatible client
+- [x] `LLMClient` interface, Ollama client, OpenAI-compatible client (`apps/api/src/llm/`). Ollama checked live with a synthetic prompt; the hosted client is tested with a fake fetch only, no real provider yet (Q-07)
 - [ ] LLM router: provider chain, timeout, circuit breaker, cache, schema validation, retry once, metadata-only call log (FR-14, FR-21, FR-22)
 - [ ] Zod schemas for all LLM outputs
 - **Done when:** a structured call succeeds locally and falls back to a second provider when the first is forced to fail (test).
